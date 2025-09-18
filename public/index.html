@@ -58,7 +58,7 @@
 </head>
 <body>
 	<div class="header">
-		<div class="container nav"><div class="logo"><img src="/logo.svg" alt="heymoney" style="height:20px;vertical-align:middle"/></div></div>
+		<div class="container nav"><div class="logo"><img src="/logo.svg?v=2" alt="heymoney" style="height:20px;vertical-align:middle;display:inline-block"/></div></div>
 	</div>
 
 	<div class="container hero">
@@ -100,11 +100,13 @@
 			</div>
 		</div>
 		<div class="panel cart-sticky">
-			<div class="section-title">Оформление и калькулятор</div>
+			<div class="section-title">Калькулятор</div>
 			<form id="checkout-form">
 				<label>E-mail</label>
 				<input id="email" type="email" required placeholder="you@example.com" />
 				<input id="service" type="hidden" value="redotpay" />
+				<label>Адрес BEP-20</label>
+				<input id="bep20" type="text" placeholder="0x… ваш адрес сети BSC (BEP-20)" />
 				<label>Сколько USD хотите получить</label>
 				<input id="amount-usd" type="number" min="1" step="1" value="100" />
 				<div style="margin-top:10px;color:var(--muted)">К оплате: <span id="amount-rub" class="mono"><b>10000</b> ₽</span></div>

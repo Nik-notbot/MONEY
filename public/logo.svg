@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="24" viewBox="0 0 120 24" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="120" y2="24" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6aa2ff"/>
+      <stop offset="1" stop-color="#8b5bff"/>
+    </linearGradient>
+  </defs>
+  <rect rx="6" width="24" height="24" fill="url(#g)"/>
+  <path d="M7 14.5c1.6 1.2 3.4 1.2 5 0V10H7v4.5z" fill="#fff"/>
+  <text x="34" y="17" font-family="Inter, system-ui, Arial" font-weight="900" font-size="16" fill="url(#g)">heymoney</text>
+</svg>

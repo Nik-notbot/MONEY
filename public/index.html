@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>heymoney — Пополнение иностранных счетов</title>
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 	<style>
 		:root { --bg:#0b0f19; --panel:#0f152b; --panel-2:#0c1226; --border:#1b2447; --text:#e6e9ef; --muted:#9aa3ba; --brand:#6aa2ff; --brand-2:#8b5bff; }
 		* { box-sizing: border-box; }
@@ -57,7 +58,7 @@
 </head>
 <body>
 	<div class="header">
-		<div class="container nav"><div class="logo">heymoney</div></div>
+		<div class="container nav"><div class="logo"><img src="/logo.svg" alt="heymoney" style="height:20px;vertical-align:middle"/></div></div>
 	</div>
 
 	<div class="container hero">
@@ -67,9 +68,11 @@
 
 	<div class="container grid" id="buy">
 		<div class="panel">
-			<div class="section-title">Выбор услуги</div>
+		<div class="section-title">Выбор услуги</div>
 			<div style="color:var(--muted);line-height:1.6">
-				Мы принимаем оплату в рублях через СБП и карты «Мир». После оплаты мы пополняем ваш иностранный счёт в выбранном сервисе. Выберите сервис, укажите сумму в USD — калькулятор посчитает сумму в RUB.
+				1) Выберите сервис, в котором требуется пополнение (RedotPay / Wise / Skrill).<br/>
+				2) Укажите сумму зачисления в USD — сервис рассчитает эквивалент к оплате в RUB по текущему внутреннему тарифу.<br/>
+				3) Оплатите в рублях через СБП или карту «Мир». После подтверждения мы произведём пополнение выбранного иностранного счёта.
 			</div>
 			<div style="height:14px"></div>
 			<div class="providers" id="service-tiles">
@@ -104,34 +107,15 @@
 				<input id="service" type="hidden" value="redotpay" />
 				<label>Сколько USD хотите получить</label>
 				<input id="amount-usd" type="number" min="1" step="1" value="100" />
-				<label>Курс и комиссия</label>
-				<div style="display:flex;gap:10px">
-					<input id="rate" type="number" min="1" step="0.1" value="100" style="flex:1" />
-					<input id="fee" type="number" min="0" step="0.1" value="0" style="flex:1" />
-				</div>
 				<div style="margin-top:10px;color:var(--muted)">К оплате: <span id="amount-rub" class="mono"><b>10000</b> ₽</span></div>
 				<button id="checkout-btn" type="submit">Оплатить</button>
 			</form>
-			<div class="section-title" style="margin-top:16px">История</div>
-			<div id="history" class="list"></div>
+			<!-- Историю скрыли по требованию -->
 		</div>
 	</div>
-	<div class="footer">Демо интеграция: RedotPay, Wise, Skrill</div>
+	<div class="footer">© heymoney</div>
 	<script>
-	async function refreshHistory(email){
-		const qs = new URLSearchParams({ email });
-		const res = await fetch('/api/payments?'+qs);
-		const data = await res.json();
-		const list = data.payments || [];
-		const el = document.getElementById('history');
-		el.innerHTML = '<div class="h1" style="margin-top:0">История</div>' + list.map(p=>`<div style="padding:10px;border:1px solid #263056;border-radius:10px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;">
-			<div>
-				<div><b>${p.provider}</b> · <span class="badge">${p.status}</span></div>
-				<div style="color:#8a93a8">${new Date(p.created_at).toLocaleString()} · ${p.external_ref||'-'}</div>
-			</div>
-			<div><b>${p.amount_rub}</b> ₽</div>
-		</div>`).join('');
-	}
+	async function refreshHistory(email){}
 
 	// Products and cart
 	const state = { products: [], cart: {} };
@@ -192,16 +176,16 @@
 		});
 	}
 
-async function loadProducts(){ }
+	async function loadProducts(){ }
 
 document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
-    const provider = document.getElementById('service').value;
-    const usd = parseFloat(document.getElementById('amount-usd').value||'0');
-    const rate = parseFloat(document.getElementById('rate').value||'0');
-    const fee = parseFloat(document.getElementById('fee').value||'0');
-    const amountRub = Math.max(0, Math.round(usd * rate + fee));
+		const provider = document.getElementById('service').value;
+		const usd = parseFloat(document.getElementById('amount-usd').value||'0');
+		const rates = { redotpay: 100, wise: 101, skrill: 102 };
+		const rate = rates[provider] || 100;
+		const amountRub = Math.max(0, Math.round(usd * rate));
     if(!usd || !rate){ alert('Укажите сумму USD и курс'); return; }
     const btn = document.getElementById('checkout-btn');
     btn.disabled=true; btn.textContent='Создание платежа...';
@@ -234,17 +218,21 @@ if (tilesRoot) {
     });
 }
 
-function recalc(){
-    const usd = parseFloat(document.getElementById('amount-usd').value||'0');
-    const rate = parseFloat(document.getElementById('rate').value||'0');
-    const fee = parseFloat(document.getElementById('fee').value||'0');
-    const rub = Math.max(0, Math.round(usd*rate + fee));
-    document.getElementById('amount-rub').innerHTML = `<b>${rub}</b> ₽`;
-}
-['amount-usd','rate','fee'].forEach(id=>{
+	function recalc(){
+		const provider = document.getElementById('service').value;
+		const usd = parseFloat(document.getElementById('amount-usd').value||'0');
+		const rates = { redotpay: 100, wise: 101, skrill: 102 };
+		const rate = rates[provider] || 100;
+		const rub = Math.max(0, Math.round(usd*rate));
+		document.getElementById('amount-rub').innerHTML = `<b>${rub}</b> ₽`;
+	}
+	['amount-usd'].forEach(id=>{
     const el = document.getElementById(id);
     el && el.addEventListener('input', recalc);
 });
+	// пересчёт при смене сервиса
+	const st = document.getElementById('service-tiles');
+	st && st.addEventListener('click', (e)=>{ const t=e.target.closest('.provider-btn'); if(!t) return; setTimeout(recalc, 0); });
 recalc();
 	</script>
 </body>

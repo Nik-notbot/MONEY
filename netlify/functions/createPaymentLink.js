@@ -1,11 +1,9 @@
-import fetch from 'node-fetch';
-
 export default async (req, context) => {
 	try {
 		if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
 		const { email, telegram, service, bep20, amountUsd } = await req.json();
 		if (!email || !service || !amountUsd) {
-			return Response.json({ error: 'email, service, amountUsd required' }, { status: 400 });
+			return new Response(JSON.stringify({ error: 'email, service, amountUsd required' }), { status: 400, headers: { 'content-type': 'application/json' } });
 		}
 		const rates = { redotpay: 100, wise: 101, skrill: 102 };
 		const amountRub = Math.max(0, Math.round(Number(amountUsd) * (rates[service] || 100)));
@@ -31,7 +29,7 @@ export default async (req, context) => {
 		});
 		if (!res.ok) {
 			const text = await res.text();
-			return Response.json({ error: 'wata_error', details: text }, { status: 502 });
+			return new Response(JSON.stringify({ error: 'wata_error', details: text }), { status: 502, headers: { 'content-type': 'application/json' } });
 		}
 		const data = await res.json();
 
@@ -74,9 +72,9 @@ export default async (req, context) => {
 			}
 		} catch {}
 
-		return Response.json({ url: data.url, orderId });
+		return new Response(JSON.stringify({ url: data.url, orderId }), { headers: { 'content-type': 'application/json' } });
 	} catch (err) {
-		return Response.json({ error: err.message }, { status: 500 });
+		return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: { 'content-type': 'application/json' } });
 	}
 };
 

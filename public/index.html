@@ -17,7 +17,7 @@
 		.header { padding: 18px 0; border-bottom: 1px solid var(--border); backdrop-filter: blur(6px); position: sticky; top: 0; background: rgba(11,15,25,0.6); z-index: 10; }
 		.nav { display: flex; align-items: center; justify-content: space-between; }
 		.logo { font-weight: 900; letter-spacing: .4px; font-size: 18px; }
-		.cta { display: inline-flex; gap: 10px; align-items: center; padding: 10px 14px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-weight: 700; text-decoration: none; }
+		/* убрали CTA */
 		.hero { padding: 48px 0 12px; }
 		.hero h1 { margin: 0 0 10px; font-size: 34px; line-height: 1.15; letter-spacing: .2px; }
 		.hero p { margin: 0; color: var(--muted); max-width: 820px; }
@@ -57,57 +57,61 @@
 </head>
 <body>
 	<div class="header">
-		<div class="container nav">
-			<div class="logo">heymoney</div>
-			<a class="cta" href="#buy">Пополнить счёт →</a>
-		</div>
+		<div class="container nav"><div class="logo">heymoney</div></div>
 	</div>
 
 	<div class="container hero">
 		<h1>Пополняйте иностранные счета быстро и удобно</h1>
-		<p>heymoney помогает безопасно пополнять счета и виртуальные карты в иностранных сервисах. Выберите услугу, добавьте в корзину и оплатите удобным способом: RedotPay, Wise или Skrill.</p>
+		<p>heymoney помогает безопасно пополнять счета и виртуальные карты в иностранных сервисах. Оплатите в рублях (СБП или карта «Мир») — мы пополним ваш иностранный счёт в выбранном сервисе.</p>
 	</div>
 
 	<div class="container grid" id="buy">
 		<div class="panel">
 			<div class="section-title">Выбор услуги</div>
-			<div id="products" class="products"></div>
+			<div style="color:var(--muted);line-height:1.6">
+				Мы принимаем оплату в рублях через СБП и карты «Мир». После оплаты мы пополняем ваш иностранный счёт в выбранном сервисе. Выберите сервис, укажите сумму в USD — калькулятор посчитает сумму в RUB.
+			</div>
+			<div style="height:14px"></div>
+			<div class="providers" id="service-tiles">
+				<div class="provider-btn active" data-service="redotpay">
+					<div class="provider-logo logo-redot">R</div>
+					<div>
+						<div style="font-weight:800">RedotPay</div>
+						<div style="font-size:12px;color:var(--muted)">Карта/кошелёк</div>
+					</div>
+				</div>
+				<div class="provider-btn" data-service="wise">
+					<div class="provider-logo logo-wise">W</div>
+					<div>
+						<div style="font-weight:800">Wise</div>
+						<div style="font-size:12px;color:var(--muted)">Банковский перевод</div>
+					</div>
+				</div>
+				<div class="provider-btn" data-service="skrill">
+					<div class="provider-logo logo-skrill">S</div>
+					<div>
+						<div style="font-weight:800">Skrill</div>
+						<div style="font-size:12px;color:var(--muted)">Кошелёк</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="panel cart-sticky">
-			<div class="section-title">Оформление</div>
+			<div class="section-title">Оформление и калькулятор</div>
 			<form id="checkout-form">
 				<label>E-mail</label>
 				<input id="email" type="email" required placeholder="you@example.com" />
-				<label>Провайдер оплаты</label>
-				<input id="provider" type="hidden" value="redotpay" />
-				<div class="providers" id="provider-tiles">
-					<div class="provider-btn active" data-provider="redotpay">
-						<div class="provider-logo logo-redot">R</div>
-						<div>
-							<div style="font-weight:800">RedotPay</div>
-							<div style="font-size:12px;color:var(--muted)">Карта/кошелёк</div>
-						</div>
-					</div>
-					<div class="provider-btn" data-provider="wise">
-						<div class="provider-logo logo-wise">W</div>
-						<div>
-							<div style="font-weight:800">Wise</div>
-							<div style="font-size:12px;color:var(--muted)">Банковский перевод</div>
-						</div>
-					</div>
-					<div class="provider-btn" data-provider="skrill">
-						<div class="provider-logo logo-skrill">S</div>
-						<div>
-							<div style="font-weight:800">Skrill</div>
-							<div style="font-size:12px;color:var(--muted)">Кошелёк</div>
-						</div>
-					</div>
+				<input id="service" type="hidden" value="redotpay" />
+				<label>Сколько USD хотите получить</label>
+				<input id="amount-usd" type="number" min="1" step="1" value="100" />
+				<label>Курс и комиссия</label>
+				<div style="display:flex;gap:10px">
+					<input id="rate" type="number" min="1" step="0.1" value="100" style="flex:1" />
+					<input id="fee" type="number" min="0" step="0.1" value="0" style="flex:1" />
 				</div>
-				<button id="checkout-btn" type="submit">Перейти к оплате</button>
+				<div style="margin-top:10px;color:var(--muted)">К оплате: <span id="amount-rub" class="mono"><b>10000</b> ₽</span></div>
+				<button id="checkout-btn" type="submit">Оплатить</button>
 			</form>
-			<div style="height:10px"></div>
-			<div class="section-title">Корзина</div>
-			<div id="cart"></div>
 			<div class="section-title" style="margin-top:16px">История</div>
 			<div id="history" class="list"></div>
 		</div>
@@ -188,54 +192,60 @@
 		});
 	}
 
-	async function loadProducts(){
-		const res = await fetch('/api/products');
-		const data = await res.json();
-		state.products = data.products||[];
-		renderProducts();
-		renderCart();
-	}
+async function loadProducts(){ }
 
-	document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
-		e.preventDefault();
-		const email = document.getElementById('email').value.trim();
-		const provider = document.getElementById('provider').value;
-		const items = Object.entries(state.cart).map(([productId,quantity])=>({ productId, quantity }));
-		if(items.length===0){ alert('Корзина пуста'); return; }
-		const btn = document.getElementById('checkout-btn');
-		btn.disabled=true; btn.textContent='Создание заказа...';
-		try{
-			const resOrder = await fetch('/api/orders', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, items }) });
-			const orderData = await resOrder.json();
-			if(!resOrder.ok) throw new Error(orderData.error||'Ошибка заказа');
-			const orderId = orderData.order.id;
-			const resCheckout = await fetch(`/api/orders/${orderId}/checkout`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ provider, email }) });
-			const chkData = await resCheckout.json();
-			if(!resCheckout.ok) throw new Error(chkData.error||'Ошибка оплаты');
-			await refreshHistory(email);
-			if(chkData.redirectUrl) window.open(chkData.redirectUrl,'_blank');
-		} catch(err){
-			alert(err.message);
-		} finally {
-			btn.disabled=false; btn.textContent='Перейти к оплате';
-		}
-	});
+document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const provider = document.getElementById('service').value;
+    const usd = parseFloat(document.getElementById('amount-usd').value||'0');
+    const rate = parseFloat(document.getElementById('rate').value||'0');
+    const fee = parseFloat(document.getElementById('fee').value||'0');
+    const amountRub = Math.max(0, Math.round(usd * rate + fee));
+    if(!usd || !rate){ alert('Укажите сумму USD и курс'); return; }
+    const btn = document.getElementById('checkout-btn');
+    btn.disabled=true; btn.textContent='Создание платежа...';
+    try{
+        const resPay = await fetch('/api/payments', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, amountRub, provider }) });
+        const chkData = await resPay.json();
+        if(!resPay.ok) throw new Error(chkData.error||'Ошибка оплаты');
+        await refreshHistory(email);
+        if(chkData.redirectUrl) window.open(chkData.redirectUrl,'_blank');
+    } catch(err){
+        alert(err.message);
+    } finally {
+        btn.disabled=false; btn.textContent='Оплатить';
+    }
+});
 
 	loadProducts();
 
-	// Provider tile selection
-	const providerInput = document.getElementById('provider');
-	const tilesRoot = document.getElementById('provider-tiles');
-	if (tilesRoot) {
-		tilesRoot.querySelectorAll('.provider-btn').forEach(tile => {
-			tile.addEventListener('click', () => {
-				const value = tile.getAttribute('data-provider');
-				providerInput.value = value;
-				tilesRoot.querySelectorAll('.provider-btn').forEach(t => t.classList.remove('active'));
-				tile.classList.add('active');
-			});
-		});
-	}
+// Service tile selection
+const providerInput = document.getElementById('service');
+const tilesRoot = document.getElementById('service-tiles');
+if (tilesRoot) {
+    tilesRoot.querySelectorAll('.provider-btn').forEach(tile => {
+        tile.addEventListener('click', () => {
+            const value = tile.getAttribute('data-service');
+            providerInput.value = value;
+            tilesRoot.querySelectorAll('.provider-btn').forEach(t => t.classList.remove('active'));
+            tile.classList.add('active');
+        });
+    });
+}
+
+function recalc(){
+    const usd = parseFloat(document.getElementById('amount-usd').value||'0');
+    const rate = parseFloat(document.getElementById('rate').value||'0');
+    const fee = parseFloat(document.getElementById('fee').value||'0');
+    const rub = Math.max(0, Math.round(usd*rate + fee));
+    document.getElementById('amount-rub').innerHTML = `<b>${rub}</b> ₽`;
+}
+['amount-usd','rate','fee'].forEach(id=>{
+    const el = document.getElementById(id);
+    el && el.addEventListener('input', recalc);
+});
+recalc();
 	</script>
 </body>
 </html>

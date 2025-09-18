@@ -35,9 +35,15 @@
 		button:disabled { opacity: .6; cursor: not-allowed; }
 		/* provider selector */
 		.providers { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 8px }
-		.provider-btn { display:flex; gap:12px; align-items:center; justify-content:flex-start; padding: 16px 18px; border: 1px solid var(--border); border-radius: 16px; background: rgba(11,18,38,0.7); cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease; box-shadow: 0 12px 28px rgba(0,0,0,.4); font-size: 18px; }
-		.provider-btn:hover { border-color: rgba(106,162,255,.55); box-shadow: 0 12px 28px rgba(0,0,0,.45); transform: translateY(-1px); }
-		.provider-btn.active { border-color: rgba(106,162,255,.9); box-shadow: 0 16px 34px rgba(106,162,255,.25); }
+		/* custom dropdown */
+		.dropdown { position: relative; }
+		.dropdown-toggle { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; padding:16px 18px; border:1px solid var(--border); border-radius:16px; background: rgba(11,18,38,0.7); cursor:pointer; box-shadow: 0 10px 26px rgba(0,0,0,.35); }
+		.dropdown-left { display:flex; align-items:center; gap:12px }
+		.dropdown-menu { position:absolute; top:100%; left:0; right:0; background: rgba(12,18,28,0.98); border:1px solid var(--border); border-radius:16px; margin-top:8px; box-shadow: 0 24px 60px rgba(0,0,0,.5); max-height: 320px; overflow:auto; display:none; z-index:20 }
+		.dropdown.open .dropdown-menu { display:block }
+		.option { display:flex; align-items:center; gap:12px; padding:12px 16px; cursor:pointer; }
+		.option:hover { background: rgba(99,163,255,.08) }
+		.option .meta { color: var(--muted); font-size: 14px }
 		.provider-logo { width: 36px; height: 36px; border-radius: 10px; display:inline-flex; align-items:center; justify-content:center; font-weight:900; color:#fff; font-size: 18px }
 		.logo-redot { background: linear-gradient(135deg,#ff6a88,#ff9966) }
 		.logo-wise { background: linear-gradient(135deg,#00b9ff,#0077ff) }
@@ -78,11 +84,32 @@
 			</div>
 			<div style="height:14px"></div>
 		<label style="text-align:center;display:block">Сервис</label>
-		<select id="service-select">
-			<option value="redotpay" selected>RedotPay — карта/кошелёк</option>
-			<option value="wise">Wise — банковский перевод</option>
-			<option value="skrill">Skrill — кошелёк</option>
-		</select>
+		<div class="dropdown" id="service-dd">
+			<button type="button" class="dropdown-toggle" id="service-dd-toggle">
+				<span class="dropdown-left">
+					<span class="provider-logo logo-redot">R</span>
+					<span>
+						<div style="font-weight:800">RedotPay</div>
+						<div class="meta">Карта/кошелёк</div>
+					</span>
+				</span>
+				<span>▾</span>
+			</button>
+			<div class="dropdown-menu" id="service-dd-menu">
+				<div class="option" data-value="redotpay">
+					<span class="provider-logo logo-redot">R</span>
+					<span><div style="font-weight:800">RedotPay</div><div class="meta">Карта/кошелёк</div></span>
+				</div>
+				<div class="option" data-value="wise">
+					<span class="provider-logo logo-wise">W</span>
+					<span><div style="font-weight:800">Wise</div><div class="meta">Банковский перевод</div></span>
+				</div>
+				<div class="option" data-value="skrill">
+					<span class="provider-logo logo-skrill">S</span>
+					<span><div style="font-weight:800">Skrill</div><div class="meta">Кошелёк</div></span>
+				</div>
+			</div>
+		</div>
 			<div id="service-instruction" style="margin-top:10px;display:flex;gap:10px;align-items:center">
 				<a id="service-guide-link" href="/guides/redotpay.html" style="display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text)">Как получить адрес кошелька для RedotPay →</a>
 			</div>
@@ -227,20 +254,44 @@ document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
 
 // Service tile selection
 const providerInput = document.getElementById('service');
-const selectEl = document.getElementById('service-select');
-if (selectEl) {
-    const updateBySelect = () => {
-        const value = selectEl.value;
-        providerInput.value = value;
-        const guideMap = { redotpay: '/guides/redotpay.html', wise: '/guides/wise.html', skrill: '/guides/skrill.html' };
-        const labelMap = { redotpay: 'RedotPay', wise: 'Wise', skrill: 'Skrill' };
-        const link = document.getElementById('service-guide-link');
-        if (link) { link.href = guideMap[value] || '#'; link.textContent = `Как получить адрес кошелька для ${labelMap[value]||''} →`; }
-        recalc();
-    };
-    selectEl.addEventListener('change', updateBySelect);
-    updateBySelect();
-}
+// Custom dropdown logic
+(function(){
+  const dd = document.getElementById('service-dd');
+  if(!dd) return;
+  const toggle = document.getElementById('service-dd-toggle');
+  const menu = document.getElementById('service-dd-menu');
+  const hidden = document.getElementById('service');
+  const link = document.getElementById('service-guide-link');
+  const guideMap = { redotpay: '/guides/redotpay.html', wise: '/guides/wise.html', skrill: '/guides/skrill.html' };
+  const labelMap = { redotpay: 'RedotPay', wise: 'Wise', skrill: 'Skrill' };
+
+  function setValue(val){
+    hidden.value = val;
+    if (link) { link.href = guideMap[val] || '#'; link.textContent = `Как получить адрес кошелька для ${labelMap[val]||''} →`; }
+    // reflect in toggle UI
+    const option = menu.querySelector(`.option[data-value="${val}"]`);
+    if(option){
+      const left = toggle.querySelector('.dropdown-left');
+      left.innerHTML = option.innerHTML; // copy logo+labels
+    }
+    recalc();
+  }
+
+  toggle.addEventListener('click', ()=>{
+    dd.classList.toggle('open');
+  });
+  menu.addEventListener('click', (e)=>{
+    const opt = e.target.closest('.option');
+    if(!opt) return;
+    setValue(opt.getAttribute('data-value'));
+    dd.classList.remove('open');
+  });
+  document.addEventListener('click', (e)=>{
+    if(!dd.contains(e.target)) dd.classList.remove('open');
+  });
+  // init
+  setValue('redotpay');
+})();
 
 	function recalc(){
 		const provider = document.getElementById('service').value;

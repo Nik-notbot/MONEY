@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>heymoney — Пополнение иностранных счетов</title>
+	<style>
+		body { font-family: system-ui, sans-serif; margin: 0; background: #0b0f19; color: #e6e9ef; }
+		.header { padding: 24px; display: flex; justify-content: center; }
+		.card { background: #11162a; border: 1px solid #1c2340; border-radius: 16px; padding: 24px; max-width: 520px; margin: 24px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+		.h1 { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
+		label { display: block; font-size: 14px; margin: 12px 0 8px; color: #b9c1d6; }
+		input, select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #263056; background: #0e1426; color: #e6e9ef; }
+		button { margin-top: 16px; width: 100%; padding: 12px 16px; border-radius: 10px; background: #5b8cfe; border: 0; color: #fff; font-weight: 700; cursor: pointer; }
+		button:disabled { opacity: .6; cursor: not-allowed; }
+		.list { margin-top: 24px; font-size: 14px; }
+		.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #263056; color: #b9c1d6; font-size: 12px; }
+		.footer { text-align: center; color: #8a93a8; padding: 24px; }
+		.logo { font-weight: 900; letter-spacing: 0.5px; }
+	</style>
+</head>
+<body>
+	<div class="header"><div class="logo">heymoney</div></div>
+	<div class="card">
+		<div class="h1">Пополнить иностранный счёт</div>
+		<form id="pay-form">
+			<label>E-mail</label>
+			<input id="email" type="email" required placeholder="you@example.com" />
+			<label>Сумма в рублях</label>
+			<input id="amount" type="number" min="100" step="1" required placeholder="1000" />
+			<label>Провайдер</label>
+			<select id="provider">
+				<option value="redotpay">RedotPay</option>
+				<option value="wise">Wise</option>
+				<option value="skrill">Skrill</option>
+			</select>
+			<button id="submit" type="submit">Оплатить</button>
+		</form>
+		<div class="list" id="history"></div>
+	</div>
+	<div class="footer">Демо интеграция: RedotPay, Wise, Skrill</div>
+	<script>
+	async function refreshHistory(email){
+		const qs = new URLSearchParams({ email });
+		const res = await fetch('/api/payments?'+qs);
+		const data = await res.json();
+		const list = data.payments || [];
+		const el = document.getElementById('history');
+		el.innerHTML = '<div class="h1" style="margin-top:0">История</div>' + list.map(p=>`<div style="padding:10px;border:1px solid #263056;border-radius:10px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;">
+			<div>
+				<div><b>${p.provider}</b> · <span class="badge">${p.status}</span></div>
+				<div style="color:#8a93a8">${new Date(p.created_at).toLocaleString()} · ${p.external_ref||'-'}</div>
+			</div>
+			<div><b>${p.amount_rub}</b> ₽</div>
+		</div>`).join('');
+	}
+	const form = document.getElementById('pay-form');
+	form.addEventListener('submit', async (e)=>{
+		e.preventDefault();
+		const email = document.getElementById('email').value.trim();
+		const amountRub = parseInt(document.getElementById('amount').value,10);
+		const provider = document.getElementById('provider').value;
+		const btn = document.getElementById('submit');
+		btn.disabled = true; btn.textContent = 'Создание платежа...';
+		try{
+			const res = await fetch('/api/payments', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, amountRub, provider })});
+			const data = await res.json();
+			if(!res.ok) throw new Error(data.error||'Ошибка');
+			await refreshHistory(email);
+			if (data.redirectUrl) {
+				window.open(data.redirectUrl, '_blank');
+			}
+		} catch(err){
+			alert(err.message);
+		} finally {
+			btn.disabled = false; btn.textContent = 'Оплатить';
+		}
+	});
+	</script>
+</body>
+</html>
+

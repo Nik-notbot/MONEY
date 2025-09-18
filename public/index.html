@@ -107,6 +107,8 @@
 			<form id="checkout-form">
 				<label>E-mail</label>
 				<input id="email" type="email" required placeholder="you@example.com" />
+				<label>Telegram</label>
+				<input id="telegram" type="text" placeholder="@username" />
 				<input id="service" type="hidden" value="redotpay" />
 				<label>Адрес BEP-20</label>
 				<input id="bep20" type="text" placeholder="0x… ваш адрес сети BSC (BEP-20)" />
@@ -186,6 +188,7 @@
 document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
+    const telegram = document.getElementById('telegram').value.trim();
 		const provider = document.getElementById('service').value;
 		const usd = parseFloat(document.getElementById('amount-usd').value||'0');
 		const rates = { redotpay: 100, wise: 101, skrill: 102 };
@@ -195,7 +198,7 @@ document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
     const btn = document.getElementById('checkout-btn');
     btn.disabled=true; btn.textContent='Создание платежа...';
     try{
-        const resPay = await fetch('/api/payments', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, amountRub, provider }) });
+        const resPay = await fetch('/api/payments', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, telegram, amountRub, provider }) });
         const chkData = await resPay.json();
         if(!resPay.ok) throw new Error(chkData.error||'Ошибка оплаты');
         await refreshHistory(email);

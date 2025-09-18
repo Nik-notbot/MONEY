@@ -1,3 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="32" viewBox="0 0 180 32" fill="none">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="180" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4FC3F7"/>
+      <stop offset="1" stop-color="#8E7CFF"/>
+    </linearGradient>
+  </defs>
+  <!-- Symbol -->
+  <g>
+    <rect x="0" y="0" width="32" height="32" rx="10" fill="url(#grad)"/>
+    <path d="M9 20.5V10h3.5v4.2c.9-.9 2.2-1.7 3.9-1.7 3.1 0 5.6 2.4 5.6 5.8V22H18.5v-2.9c0-1.8-1.2-3-2.9-3-1.9 0-3.3 1.4-3.3 3.5V22H9v-1.5z" fill="#fff"/>
+  </g>
+  <!-- Wordmark -->
+  <g transform="translate(44,7)">
+    <text x="0" y="16" font-family="Inter, ui-sans-serif, system-ui, Arial" font-weight="800" font-size="18" fill="url(#grad)">heymoney</text>
+  </g>
+</svg>
 <svg xmlns="http://www.w3.org/2000/svg" width="120" height="24" viewBox="0 0 120 24" fill="none">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="120" y2="24" gradientUnits="userSpaceOnUse">

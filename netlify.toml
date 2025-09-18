@@ -1,0 +1,10 @@
+[build]
+  publish = "public"
+  command = ""
+
+# Optional: redirect all paths to index.html if you later make it an SPA
+[[redirects]]
+  from = "/health"
+  to = "/index.html"
+  status = 200
+

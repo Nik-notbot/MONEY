@@ -1,3 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 40" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="200" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00D19A"/>
+      <stop offset="1" stop-color="#3FA6FF"/>
+    </linearGradient>
+  </defs>
+  <!-- Monogram H inside hex for crypto vibe -->
+  <g>
+    <path d="M8 8l12-6 12 6v12l-12 6-12-6V8z" fill="url(#g)"/>
+    <path d="M17 12h6v5h-6v5h-4V7h4v5zm6 0h4v15h-4v-5h-6v-5h6z" fill="#0a0f1a"/>
+  </g>
+  <!-- Wordmark -->
+  <g transform="translate(46,9)">
+    <text x="0" y="18" font-family="Inter, ui-sans-serif, system-ui, Arial" font-weight="900" font-size="20" fill="url(#g)">heymoney</text>
+  </g>
+</svg>
 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="32" viewBox="0 0 180 32" fill="none">
   <defs>
     <linearGradient id="grad" x1="0" y1="0" x2="180" y2="32" gradientUnits="userSpaceOnUse">

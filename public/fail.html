@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Оплата не создана</title>
+</head>
+<body style="font-family:system-ui,sans-serif;background:#0b0f19;color:#e6e9ef">
+  <div style="max-width:720px;margin:40px auto;padding:20px;border:1px solid #1b2447;border-radius:12px">
+    <h1>Не удалось создать платёж</h1>
+    <p>Номер заказа: <span id="oid"></span></p>
+    <p>Попробуйте ещё раз или свяжитесь с поддержкой.</p>
+    <a href="/" style="color:#6aa2ff">Вернуться на главную</a>
+  </div>
+  <script>document.getElementById('oid').textContent=new URLSearchParams(location.search).get('orderId')||'';</script>
+</body>
+</html>
+

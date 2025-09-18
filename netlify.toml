@@ -1,6 +1,10 @@
 [build]
   publish = "public"
   command = ""
+[
+functions]
+  directory = "netlify/functions"
+
 
 # Proxy API to external backend
 [[redirects]]

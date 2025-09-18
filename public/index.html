@@ -239,11 +239,10 @@ document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
     const btn = document.getElementById('checkout-btn');
     btn.disabled=true; btn.textContent='Создание платежа...';
     try{
-        const resPay = await fetch('/api/payments', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, telegram, amountRub, provider }) });
+        const resPay = await fetch('/.netlify/functions/createPaymentLink', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, telegram, service: provider, bep20: document.getElementById('bep20').value.trim(), amountUsd: usd }) });
         const chkData = await resPay.json();
         if(!resPay.ok) throw new Error(chkData.error||'Ошибка оплаты');
-        await refreshHistory(email);
-        if(chkData.redirectUrl) window.open(chkData.redirectUrl,'_blank');
+        if(chkData.url) { window.location.href = chkData.url; return; }
     } catch(err){
         alert(err.message);
     } finally {

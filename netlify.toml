@@ -2,7 +2,20 @@
   publish = "public"
   command = ""
 
-# Optional: redirect all paths to index.html if you later make it an SPA
+# Proxy API to external backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://heymoney-backend.example/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/webhooks/*"
+  to = "https://heymoney-backend.example/webhooks/:splat"
+  status = 200
+  force = true
+
+# Health route fallback (optional)
 [[redirects]]
   from = "/health"
   to = "/index.html"

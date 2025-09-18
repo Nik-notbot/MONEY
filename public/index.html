@@ -5,46 +5,83 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>heymoney — Пополнение иностранных счетов</title>
 	<style>
-		body { font-family: system-ui, sans-serif; margin: 0; background: #0b0f19; color: #e6e9ef; }
-		.header { padding: 24px; display: flex; justify-content: center; }
-		.card { background: #11162a; border: 1px solid #1c2340; border-radius: 16px; padding: 24px; max-width: 520px; margin: 24px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-		.h1 { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
-		label { display: block; font-size: 14px; margin: 12px 0 8px; color: #b9c1d6; }
-		input, select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #263056; background: #0e1426; color: #e6e9ef; }
-		button { margin-top: 16px; width: 100%; padding: 12px 16px; border-radius: 10px; background: #5b8cfe; border: 0; color: #fff; font-weight: 700; cursor: pointer; }
+		:root { --bg:#0b0f19; --panel:#0f152b; --panel-2:#0c1226; --border:#1b2447; --text:#e6e9ef; --muted:#9aa3ba; --brand:#6aa2ff; --brand-2:#8b5bff; }
+		* { box-sizing: border-box; }
+		body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; margin: 0; background:
+			radial-gradient(1200px 600px at 10% -10%, rgba(107,122,255,0.15), transparent),
+			radial-gradient(800px 400px at 100% 0%, rgba(139,91,255,0.12), transparent),
+			var(--bg);
+			color: var(--text);
+		}
+		.container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+		.header { padding: 18px 0; border-bottom: 1px solid var(--border); backdrop-filter: blur(6px); position: sticky; top: 0; background: rgba(11,15,25,0.6); z-index: 10; }
+		.nav { display: flex; align-items: center; justify-content: space-between; }
+		.logo { font-weight: 900; letter-spacing: .4px; font-size: 18px; }
+		.cta { display: inline-flex; gap: 10px; align-items: center; padding: 10px 14px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); color: #fff; font-weight: 700; text-decoration: none; }
+		.hero { padding: 48px 0 12px; }
+		.hero h1 { margin: 0 0 10px; font-size: 34px; line-height: 1.15; letter-spacing: .2px; }
+		.hero p { margin: 0; color: var(--muted); max-width: 820px; }
+		.grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+		@media (min-width: 960px) { .grid { grid-template-columns: 1.5fr .9fr; } }
+		.panel { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--border); border-radius: 18px; padding: 18px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+		.section-title { font-size: 18px; font-weight: 800; margin: 0 0 12px; }
+		label { display: block; font-size: 13px; margin: 10px 0 8px; color: var(--muted); }
+		input, select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: #0b1226; color: var(--text); }
+		button { margin-top: 12px; width: 100%; padding: 12px 16px; border-radius: 12px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); border: 0; color: #fff; font-weight: 800; cursor: pointer; box-shadow: 0 8px 24px rgba(106,162,255,.25); transition: transform .12s ease, box-shadow .12s ease; }
+		button:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(106,162,255,.35); }
 		button:disabled { opacity: .6; cursor: not-allowed; }
-		.list { margin-top: 24px; font-size: 14px; }
 		.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #263056; color: #b9c1d6; font-size: 12px; }
-		.footer { text-align: center; color: #8a93a8; padding: 24px; }
-		.logo { font-weight: 900; letter-spacing: 0.5px; }
+		.footer { text-align: center; color: var(--muted); padding: 26px; }
+		.products { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px }
+		.card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #0c1226; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+		.card:hover { transform: translateY(-3px); border-color: rgba(106,162,255,.5); box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+		.card .img { width: 100%; height: 160px; object-fit: cover; display:block }
+		.card .body { padding: 12px 14px }
+		.card .title { font-weight: 800; }
+		.card .desc { color: var(--muted); font-size: 13px; margin: 6px 0 12px }
+		.row { display:flex;justify-content:space-between;align-items:center }
+		.cart-sticky { position: sticky; top: 86px }
+		.cart-item { display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:12px;padding:10px;margin:8px 0 }
+		.cart-thumb { width:48px;height:48px;object-fit:cover;border-radius:8px }
+		.mono { font-variant-numeric: tabular-nums }
 	</style>
 </head>
 <body>
-	<div class="header"><div class="logo">heymoney</div></div>
-	<div class="card" style="max-width:980px">
-		<div class="h1">Магазин услуг пополнения</div>
-		<div id="products" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px"></div>
-		<hr style="border:none;border-top:1px solid #263056;margin:20px 0"/>
-		<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-			<div>
-				<div class="h1">Корзина</div>
-				<div id="cart"></div>
-			</div>
-			<div>
-				<div class="h1">Оформление</div>
-				<form id="checkout-form">
-					<label>E-mail</label>
-					<input id="email" type="email" required placeholder="you@example.com" />
-					<label>Провайдер оплаты</label>
-					<select id="provider">
-						<option value="redotpay">RedotPay</option>
-						<option value="wise">Wise</option>
-						<option value="skrill">Skrill</option>
-					</select>
-					<button id="checkout-btn" type="submit">Перейти к оплате</button>
-				</form>
-				<div class="list" id="history"></div>
-			</div>
+	<div class="header">
+		<div class="container nav">
+			<div class="logo">heymoney</div>
+			<a class="cta" href="#buy">Пополнить счёт →</a>
+		</div>
+	</div>
+
+	<div class="container hero">
+		<h1>Пополняйте иностранные счета быстро и удобно</h1>
+		<p>heymoney помогает безопасно пополнять счета и виртуальные карты в иностранных сервисах. Выберите услугу, добавьте в корзину и оплатите удобным способом: RedotPay, Wise или Skrill.</p>
+	</div>
+
+	<div class="container grid" id="buy">
+		<div class="panel">
+			<div class="section-title">Выбор услуги</div>
+			<div id="products" class="products"></div>
+		</div>
+		<div class="panel cart-sticky">
+			<div class="section-title">Оформление</div>
+			<form id="checkout-form">
+				<label>E-mail</label>
+				<input id="email" type="email" required placeholder="you@example.com" />
+				<label>Провайдер оплаты</label>
+				<select id="provider">
+					<option value="redotpay">RedotPay</option>
+					<option value="wise">Wise</option>
+					<option value="skrill">Skrill</option>
+				</select>
+				<button id="checkout-btn" type="submit">Перейти к оплате</button>
+			</form>
+			<div style="height:10px"></div>
+			<div class="section-title">Корзина</div>
+			<div id="cart"></div>
+			<div class="section-title" style="margin-top:16px">История</div>
+			<div id="history" class="list"></div>
 		</div>
 	</div>
 	<div class="footer">Демо интеграция: RedotPay, Wise, Skrill</div>
@@ -70,13 +107,13 @@
 	function renderProducts(){
 		const root = document.getElementById('products');
 		root.innerHTML = state.products.map(p=>`
-			<div style="border:1px solid #263056;border-radius:14px;overflow:hidden;background:#0e1426">
-				<img src="${p.image}" alt="${p.name}" style="width:100%;height:160px;object-fit:cover"/>
-				<div style="padding:12px 14px">
-					<div style="font-weight:700">${p.name}</div>
-					<div style="color:#8a93a8;font-size:13px;margin:6px 0 10px">${p.description||''}</div>
-					<div style="display:flex;justify-content:space-between;align-items:center">
-						<div><b>${p.price_rub}</b> ₽</div>
+			<div class="card">
+				<img class="img" src="${p.image}" alt="${p.name}"/>
+				<div class="body">
+					<div class="title">${p.name}</div>
+					<div class="desc">${p.description||''}</div>
+					<div class="row">
+						<div class="mono"><b>${p.price_rub}</b> ₽</div>
 						<button data-add="${p.id}" style="width:auto;padding:8px 12px">В корзину</button>
 					</div>
 				</div>
@@ -100,9 +137,9 @@
 		root.innerHTML = entries.map(([id,qty])=>{
 			const p = byId[id];
 			const sum = p.price_rub*qty; total+=sum;
-			return `<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #263056;border-radius:10px;padding:10px;margin:8px 0">
+			return `<div class="cart-item">
 				<div style="display:flex;gap:10px;align-items:center">
-					<img src="${p.image}" style="width:48px;height:48px;object-fit:cover;border-radius:8px"/>
+					<img src="${p.image}" class="cart-thumb"/>
 					<div>
 						<div><b>${p.name}</b></div>
 						<div style="color:#8a93a8;font-size:12px">${p.price_rub} ₽ × ${qty}</div>
@@ -111,10 +148,10 @@
 				<div>
 					<button data-dec="${id}" style="width:auto;padding:6px 10px;margin-right:6px">−</button>
 					<button data-inc="${id}" style="width:auto;padding:6px 10px">+</button>
-					<div style="margin-top:6px;text-align:right"><b>${sum}</b> ₽</div>
+					<div class="mono" style="margin-top:6px;text-align:right"><b>${sum}</b> ₽</div>
 				</div>
 			</div>`;
-		}).join('') + `<div style="text-align:right;margin-top:10px">Итого: <b>${total}</b> ₽</div>`;
+		}).join('') + `<div class="mono" style="text-align:right;margin-top:10px">Итого: <b>${total}</b> ₽</div>`;
 		root.querySelectorAll('button[data-dec]').forEach(btn=>{
 			btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-dec'); state.cart[id]=Math.max(0,(state.cart[id]||0)-1); if(state.cart[id]===0) delete state.cart[id]; renderCart(); });
 		});

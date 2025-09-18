@@ -98,6 +98,9 @@
 					</div>
 				</div>
 			</div>
+			<div id="service-instruction" style="margin-top:10px;display:flex;gap:10px;align-items:center">
+				<a id="service-guide-link" href="/guides/redotpay.html" style="display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--border);border-radius:10px;text-decoration:none;color:var(--text)">Как получить адрес кошелька для RedotPay →</a>
+			</div>
 		</div>
 		<div class="panel cart-sticky">
 			<div class="section-title">Калькулятор</div>
@@ -216,6 +219,10 @@ if (tilesRoot) {
             providerInput.value = value;
             tilesRoot.querySelectorAll('.provider-btn').forEach(t => t.classList.remove('active'));
             tile.classList.add('active');
+            const guideMap = { redotpay: '/guides/redotpay.html', wise: '/guides/wise.html', skrill: '/guides/skrill.html' };
+            const labelMap = { redotpay: 'RedotPay', wise: 'Wise', skrill: 'Skrill' };
+            const link = document.getElementById('service-guide-link');
+            if (link) { link.href = guideMap[value] || '#'; link.textContent = `Как получить адрес кошелька для ${labelMap[value]||''} →`; }
         });
     });
 }

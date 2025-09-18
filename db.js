@@ -23,6 +23,42 @@ CREATE TABLE IF NOT EXISTS payments (
 	updated_at TEXT NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS products (
+	id TEXT PRIMARY KEY,
+	name TEXT NOT NULL,
+	description TEXT,
+	price_rub INTEGER NOT NULL,
+	image TEXT,
+	created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+	id TEXT PRIMARY KEY,
+	user_id TEXT NOT NULL,
+	status TEXT NOT NULL,
+	total_rub INTEGER NOT NULL,
+	payment_id TEXT,
+	created_at TEXT NOT NULL,
+	updated_at TEXT NOT NULL,
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+	id TEXT PRIMARY KEY,
+	order_id TEXT NOT NULL,
+	product_id TEXT NOT NULL,
+	quantity INTEGER NOT NULL,
+	unit_price_rub INTEGER NOT NULL,
+	created_at TEXT NOT NULL,
+	FOREIGN KEY(order_id) REFERENCES orders(id),
+	FOREIGN KEY(product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS meta (
+	key TEXT PRIMARY KEY,
+	value TEXT
+);
 `);
 
 export function getOrCreateUserByEmail(email) {
@@ -62,4 +98,68 @@ export function listUserPayments(userId) {
 }
 
 export default db;
+
+// Products
+export function listProducts() {
+	return db.prepare('SELECT * FROM products ORDER BY created_at DESC').all();
+}
+
+export function seedDemoProductsOnce() {
+	const seeded = db.prepare('SELECT value FROM meta WHERE key = ?').get('seed_products_v1');
+	if (seeded?.value === '1') return;
+	const now = new Date().toISOString();
+	const insert = db.prepare('INSERT INTO products (id, name, description, price_rub, image, created_at) VALUES (?, ?, ?, ?, ?, ?)');
+	const items = [
+		{ name: 'Виртуальная карта EUR', description: 'Пополнение иностранного счёта, валюта EUR', price_rub: 5000, image: 'https://picsum.photos/seed/eur/400/240' },
+		{ name: 'Виртуальная карта USD', description: 'Пополнение иностранного счёта, валюта USD', price_rub: 5500, image: 'https://picsum.photos/seed/usd/400/240' },
+		{ name: 'Перевод SEPA', description: 'Международный перевод в EUR', price_rub: 3000, image: 'https://picsum.photos/seed/sepa/400/240' },
+		{ name: 'Перевод SWIFT', description: 'SWIFT перевод в USD/EUR/GBP', price_rub: 7000, image: 'https://picsum.photos/seed/swift/400/240' }
+	];
+	for (const p of items) {
+		insert.run(randomUUID(), p.name, p.description, p.price_rub, p.image, now);
+	}
+	db.prepare('INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)').run('seed_products_v1', '1');
+}
+
+// Orders
+export function createOrderWithItems({ userId, items }) {
+	// items: [{ productId, quantity }]
+	const now = new Date().toISOString();
+	const orderId = randomUUID();
+	const getProd = db.prepare('SELECT * FROM products WHERE id = ?');
+	let total = 0;
+	for (const it of items) {
+		const prod = getProd.get(it.productId);
+		if (!prod) throw new Error('Product not found: ' + it.productId);
+		const qty = Math.max(1, parseInt(it.quantity, 10) || 1);
+		total += prod.price_rub * qty;
+	}
+	const insertOrder = db.prepare('INSERT INTO orders (id, user_id, status, total_rub, payment_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)');
+	insertOrder.run(orderId, userId, 'created', total, null, now, now);
+	const insertItem = db.prepare('INSERT INTO order_items (id, order_id, product_id, quantity, unit_price_rub, created_at) VALUES (?, ?, ?, ?, ?, ?)');
+	for (const it of items) {
+		const prod = getProd.get(it.productId);
+		const qty = Math.max(1, parseInt(it.quantity, 10) || 1);
+		insertItem.run(randomUUID(), orderId, prod.id, qty, prod.price_rub, now);
+	}
+	return getOrderById(orderId);
+}
+
+export function getOrderById(id) {
+	const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
+	if (!order) return null;
+	const items = db.prepare(`SELECT oi.*, p.name, p.image FROM order_items oi JOIN products p ON p.id = oi.product_id WHERE order_id = ?`).all(id);
+	return { ...order, items };
+}
+
+export function setOrderPayment(orderId, paymentId) {
+	const now = new Date().toISOString();
+	db.prepare('UPDATE orders SET payment_id = ?, updated_at = ? WHERE id = ?').run(paymentId, now, orderId);
+	return getOrderById(orderId);
+}
+
+export function listOrdersByUser(userId) {
+	const rows = db.prepare('SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC').all(userId);
+	return rows.map(o => ({ ...o, items: db.prepare('SELECT * FROM order_items WHERE order_id = ?').all(o.id) }));
+}
 

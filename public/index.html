@@ -21,22 +21,31 @@
 </head>
 <body>
 	<div class="header"><div class="logo">heymoney</div></div>
-	<div class="card">
-		<div class="h1">Пополнить иностранный счёт</div>
-		<form id="pay-form">
-			<label>E-mail</label>
-			<input id="email" type="email" required placeholder="you@example.com" />
-			<label>Сумма в рублях</label>
-			<input id="amount" type="number" min="100" step="1" required placeholder="1000" />
-			<label>Провайдер</label>
-			<select id="provider">
-				<option value="redotpay">RedotPay</option>
-				<option value="wise">Wise</option>
-				<option value="skrill">Skrill</option>
-			</select>
-			<button id="submit" type="submit">Оплатить</button>
-		</form>
-		<div class="list" id="history"></div>
+	<div class="card" style="max-width:980px">
+		<div class="h1">Магазин услуг пополнения</div>
+		<div id="products" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px"></div>
+		<hr style="border:none;border-top:1px solid #263056;margin:20px 0"/>
+		<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+			<div>
+				<div class="h1">Корзина</div>
+				<div id="cart"></div>
+			</div>
+			<div>
+				<div class="h1">Оформление</div>
+				<form id="checkout-form">
+					<label>E-mail</label>
+					<input id="email" type="email" required placeholder="you@example.com" />
+					<label>Провайдер оплаты</label>
+					<select id="provider">
+						<option value="redotpay">RedotPay</option>
+						<option value="wise">Wise</option>
+						<option value="skrill">Skrill</option>
+					</select>
+					<button id="checkout-btn" type="submit">Перейти к оплате</button>
+				</form>
+				<div class="list" id="history"></div>
+			</div>
+		</div>
 	</div>
 	<div class="footer">Демо интеграция: RedotPay, Wise, Skrill</div>
 	<script>
@@ -54,28 +63,100 @@
 			<div><b>${p.amount_rub}</b> ₽</div>
 		</div>`).join('');
 	}
-	const form = document.getElementById('pay-form');
-	form.addEventListener('submit', async (e)=>{
+
+	// Products and cart
+	const state = { products: [], cart: {} };
+
+	function renderProducts(){
+		const root = document.getElementById('products');
+		root.innerHTML = state.products.map(p=>`
+			<div style="border:1px solid #263056;border-radius:14px;overflow:hidden;background:#0e1426">
+				<img src="${p.image}" alt="${p.name}" style="width:100%;height:160px;object-fit:cover"/>
+				<div style="padding:12px 14px">
+					<div style="font-weight:700">${p.name}</div>
+					<div style="color:#8a93a8;font-size:13px;margin:6px 0 10px">${p.description||''}</div>
+					<div style="display:flex;justify-content:space-between;align-items:center">
+						<div><b>${p.price_rub}</b> ₽</div>
+						<button data-add="${p.id}" style="width:auto;padding:8px 12px">В корзину</button>
+					</div>
+				</div>
+			</div>
+		`).join('');
+		root.querySelectorAll('button[data-add]').forEach(btn=>{
+			btn.addEventListener('click',()=>{
+				const id = btn.getAttribute('data-add');
+				state.cart[id] = (state.cart[id]||0) + 1;
+				renderCart();
+			});
+		});
+	}
+
+	function renderCart(){
+		const root = document.getElementById('cart');
+		const entries = Object.entries(state.cart);
+		if(entries.length===0){ root.innerHTML = '<div style="color:#8a93a8">Корзина пуста</div>'; return; }
+		const byId = Object.fromEntries(state.products.map(p=>[p.id,p]));
+		let total = 0;
+		root.innerHTML = entries.map(([id,qty])=>{
+			const p = byId[id];
+			const sum = p.price_rub*qty; total+=sum;
+			return `<div style="display:flex;justify-content:space-between;align-items:center;border:1px solid #263056;border-radius:10px;padding:10px;margin:8px 0">
+				<div style="display:flex;gap:10px;align-items:center">
+					<img src="${p.image}" style="width:48px;height:48px;object-fit:cover;border-radius:8px"/>
+					<div>
+						<div><b>${p.name}</b></div>
+						<div style="color:#8a93a8;font-size:12px">${p.price_rub} ₽ × ${qty}</div>
+					</div>
+				</div>
+				<div>
+					<button data-dec="${id}" style="width:auto;padding:6px 10px;margin-right:6px">−</button>
+					<button data-inc="${id}" style="width:auto;padding:6px 10px">+</button>
+					<div style="margin-top:6px;text-align:right"><b>${sum}</b> ₽</div>
+				</div>
+			</div>`;
+		}).join('') + `<div style="text-align:right;margin-top:10px">Итого: <b>${total}</b> ₽</div>`;
+		root.querySelectorAll('button[data-dec]').forEach(btn=>{
+			btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-dec'); state.cart[id]=Math.max(0,(state.cart[id]||0)-1); if(state.cart[id]===0) delete state.cart[id]; renderCart(); });
+		});
+		root.querySelectorAll('button[data-inc]').forEach(btn=>{
+			btn.addEventListener('click',()=>{ const id=btn.getAttribute('data-inc'); state.cart[id]=(state.cart[id]||0)+1; renderCart(); });
+		});
+	}
+
+	async function loadProducts(){
+		const res = await fetch('/api/products');
+		const data = await res.json();
+		state.products = data.products||[];
+		renderProducts();
+		renderCart();
+	}
+
+	document.getElementById('checkout-form').addEventListener('submit', async (e)=>{
 		e.preventDefault();
 		const email = document.getElementById('email').value.trim();
-		const amountRub = parseInt(document.getElementById('amount').value,10);
 		const provider = document.getElementById('provider').value;
-		const btn = document.getElementById('submit');
-		btn.disabled = true; btn.textContent = 'Создание платежа...';
+		const items = Object.entries(state.cart).map(([productId,quantity])=>({ productId, quantity }));
+		if(items.length===0){ alert('Корзина пуста'); return; }
+		const btn = document.getElementById('checkout-btn');
+		btn.disabled=true; btn.textContent='Создание заказа...';
 		try{
-			const res = await fetch('/api/payments', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, amountRub, provider })});
-			const data = await res.json();
-			if(!res.ok) throw new Error(data.error||'Ошибка');
+			const resOrder = await fetch('/api/orders', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, items }) });
+			const orderData = await resOrder.json();
+			if(!resOrder.ok) throw new Error(orderData.error||'Ошибка заказа');
+			const orderId = orderData.order.id;
+			const resCheckout = await fetch(`/api/orders/${orderId}/checkout`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ provider, email }) });
+			const chkData = await resCheckout.json();
+			if(!resCheckout.ok) throw new Error(chkData.error||'Ошибка оплаты');
 			await refreshHistory(email);
-			if (data.redirectUrl) {
-				window.open(data.redirectUrl, '_blank');
-			}
+			if(chkData.redirectUrl) window.open(chkData.redirectUrl,'_blank');
 		} catch(err){
 			alert(err.message);
 		} finally {
-			btn.disabled = false; btn.textContent = 'Оплатить';
+			btn.disabled=false; btn.textContent='Перейти к оплате';
 		}
 	});
+
+	loadProducts();
 	</script>
 </body>
 </html>

@@ -121,6 +121,34 @@
 		</div>
 	</div>
 	<div class="footer">© heymoney</div>
+	<div class="container" style="margin-top:20px;margin-bottom:30px">
+		<div class="panel" style="margin-bottom:20px">
+			<div class="section-title">Как это работает</div>
+			<ol style="margin:0;padding-left:18px;color:var(--muted);line-height:1.6">
+				<li>Вы выбираете сервис пополнения (RedotPay / Wise / Skrill) и сумму в USD.</li>
+				<li>Сервис рассчитывает сумму к оплате в RUB по актуальному внутреннему тарифу.</li>
+				<li>Вы оплачиваете в рублях через СБП или карту «Мир».</li>
+				<li>Мы подтверждаем платёж и пополняем ваш иностранный счёт по указанным реквизитам/адресу.</li>
+			</ol>
+		</div>
+		<div class="panel">
+			<div class="section-title">FAQ</div>
+			<div id="faq" style="display:grid;gap:10px">
+				<div class="faq-item" style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+					<button class="faq-q" style="all:unset;display:block;width:100%;padding:12px 14px;cursor:pointer">Какие способы оплаты доступны?</button>
+					<div class="faq-a" style="display:none;padding:0 14px 12px;color:var(--muted)">Поддерживаем СБП и карты «Мир». Зарубежные карты не требуются.</div>
+				</div>
+				<div class="faq-item" style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+					<button class="faq-q" style="all:unset;display:block;width:100%;padding:12px 14px;cursor:pointer">Сколько идёт зачисление?</button>
+					<div class="faq-a" style="display:none;padding:0 14px 12px;color:var(--muted)">Обычно 5–30 минут после подтверждения оплаты. В редких случаях до 24 часов.</div>
+				</div>
+				<div class="faq-item" style="border:1px solid var(--border);border-radius:12px;overflow:hidden">
+					<button class="faq-q" style="all:unset;display:block;width:100%;padding:12px 14px;cursor:pointer">Какой курс используется?</button>
+					<div class="faq-a" style="display:none;padding:0 14px 12px;color:var(--muted)">Применяется внутренний тариф для выбранного сервиса. Итоговая сумма в RUB показывается до оплаты.</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script>
 	async function refreshHistory(email){}
 
@@ -246,6 +274,20 @@ if (tilesRoot) {
 	const st = document.getElementById('service-tiles');
 	st && st.addEventListener('click', (e)=>{ const t=e.target.closest('.provider-btn'); if(!t) return; setTimeout(recalc, 0); });
 recalc();
+
+// FAQ toggle
+(function(){
+	const root = document.getElementById('faq');
+	if(!root) return;
+	root.querySelectorAll('.faq-q').forEach(btn=>{
+		btn.addEventListener('click',()=>{
+			const item = btn.parentElement;
+			const ans = item.querySelector('.faq-a');
+			const open = ans.style.display !== 'none';
+			ans.style.display = open ? 'none' : 'block';
+		});
+	});
+})();
 	</script>
 </body>
 </html>

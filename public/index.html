@@ -30,6 +30,15 @@
 		button { margin-top: 12px; width: 100%; padding: 12px 16px; border-radius: 12px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); border: 0; color: #fff; font-weight: 800; cursor: pointer; box-shadow: 0 8px 24px rgba(106,162,255,.25); transition: transform .12s ease, box-shadow .12s ease; }
 		button:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(106,162,255,.35); }
 		button:disabled { opacity: .6; cursor: not-allowed; }
+		/* provider selector */
+		.providers { display:grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 6px 0 6px }
+		.provider-btn { display:flex; gap:10px; align-items:center; justify-content:flex-start; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; background: #0b1226; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, transform .1s ease; }
+		.provider-btn:hover { border-color: rgba(106,162,255,.5); box-shadow: 0 6px 20px rgba(0,0,0,.35); transform: translateY(-1px); }
+		.provider-btn.active { border-color: rgba(106,162,255,.8); box-shadow: 0 10px 28px rgba(106,162,255,.18); }
+		.provider-logo { width: 26px; height: 26px; border-radius: 7px; display:inline-flex; align-items:center; justify-content:center; font-weight:900; color:#fff }
+		.logo-redot { background: linear-gradient(135deg,#ff6a88,#ff9966) }
+		.logo-wise { background: linear-gradient(135deg,#00b9ff,#0077ff) }
+		.logo-skrill { background: linear-gradient(135deg,#7b2abf,#b1357a) }
 		.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #263056; color: #b9c1d6; font-size: 12px; }
 		.footer { text-align: center; color: var(--muted); padding: 26px; }
 		.products { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px }
@@ -70,11 +79,30 @@
 				<label>E-mail</label>
 				<input id="email" type="email" required placeholder="you@example.com" />
 				<label>Провайдер оплаты</label>
-				<select id="provider">
-					<option value="redotpay">RedotPay</option>
-					<option value="wise">Wise</option>
-					<option value="skrill">Skrill</option>
-				</select>
+				<input id="provider" type="hidden" value="redotpay" />
+				<div class="providers" id="provider-tiles">
+					<div class="provider-btn active" data-provider="redotpay">
+						<div class="provider-logo logo-redot">R</div>
+						<div>
+							<div style="font-weight:800">RedotPay</div>
+							<div style="font-size:12px;color:var(--muted)">Карта/кошелёк</div>
+						</div>
+					</div>
+					<div class="provider-btn" data-provider="wise">
+						<div class="provider-logo logo-wise">W</div>
+						<div>
+							<div style="font-weight:800">Wise</div>
+							<div style="font-size:12px;color:var(--muted)">Банковский перевод</div>
+						</div>
+					</div>
+					<div class="provider-btn" data-provider="skrill">
+						<div class="provider-logo logo-skrill">S</div>
+						<div>
+							<div style="font-weight:800">Skrill</div>
+							<div style="font-size:12px;color:var(--muted)">Кошелёк</div>
+						</div>
+					</div>
+				</div>
 				<button id="checkout-btn" type="submit">Перейти к оплате</button>
 			</form>
 			<div style="height:10px"></div>
@@ -194,6 +222,20 @@
 	});
 
 	loadProducts();
+
+	// Provider tile selection
+	const providerInput = document.getElementById('provider');
+	const tilesRoot = document.getElementById('provider-tiles');
+	if (tilesRoot) {
+		tilesRoot.querySelectorAll('.provider-btn').forEach(tile => {
+			tile.addEventListener('click', () => {
+				const value = tile.getAttribute('data-provider');
+				providerInput.value = value;
+				tilesRoot.querySelectorAll('.provider-btn').forEach(t => t.classList.remove('active'));
+				tile.classList.add('active');
+			});
+		});
+	}
 	</script>
 </body>
 </html>

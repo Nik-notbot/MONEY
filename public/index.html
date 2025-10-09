@@ -44,12 +44,24 @@
 		.dropdown-toggle { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; padding:16px 18px; border:1px solid var(--border); border-radius:16px; background: rgba(11,18,38,0.7); cursor:pointer; box-shadow: 0 10px 26px rgba(0,0,0,.35); }
 		.dropdown-left { display:flex; align-items:center; gap:12px }
 		.dropdown-left > span:last-child { display: flex; flex-direction: column; justify-content: center; text-align: left; }
-		.dropdown-menu { position:absolute; top:100%; left:0; right:0; background: rgba(12,18,28,0.98); border:1px solid var(--border); border-radius:16px; margin-top:8px; box-shadow: 0 24px 60px rgba(0,0,0,.5); max-height: 300px; overflow:auto; display:none; z-index:2; overscroll-behavior: contain }
-		.dropdown.open .dropdown-menu { display:block }
-		.option { display:flex; align-items:center; gap:12px; padding:12px 16px; cursor:pointer; }
-		.option:hover { background: rgba(99,163,255,.08) }
-		.option .meta { color: var(--muted); font-size: 14px; margin-top: 2px; }
+		.dropdown-menu { position:absolute; top:100%; left:0; right:0; background: rgba(12,18,28,0.98); border:1px solid var(--border); border-radius:16px; margin-top:8px; box-shadow: 0 24px 60px rgba(0,0,0,.5); max-height: 400px; overflow:hidden; display:none; z-index:2; overscroll-behavior: contain; backdrop-filter: blur(20px) }
+		.dropdown.open .dropdown-menu { display:block; animation: dropdownFadeIn 0.2s ease-out }
+		@keyframes dropdownFadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+		.search-container { padding: 12px; border-bottom: 1px solid var(--border); }
+		.search-input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: rgba(11,18,38,0.7); color: var(--text); font-size: 14px; outline: none; transition: border-color 0.2s ease; }
+		.search-input:focus { border-color: var(--brand); }
+		.search-input::placeholder { color: var(--muted); }
+		.dropdown-content { max-height: 320px; overflow-y: auto; padding: 8px 0; }
+		.group { margin-bottom: 16px; }
+		.group:last-child { margin-bottom: 0; }
+		.group-title { padding: 8px 16px 4px; font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: 0.5px; }
+		.option { display:flex; align-items:center; gap:12px; padding:10px 16px; cursor:pointer; transition: all 0.15s ease; position: relative; }
+		.option:hover { background: rgba(99,163,255,.08); transform: translateX(4px); }
+		.option.hidden { display: none; }
+		.option .meta { color: var(--muted); font-size: 13px; margin-top: 2px; }
 		.option > span:last-child { display: flex; flex-direction: column; justify-content: center; }
+		.option .provider-logo { transition: transform 0.15s ease; }
+		.option:hover .provider-logo { transform: scale(1.1); }
 		.provider-logo { width: 36px; height: 36px; border-radius: 10px; display:inline-flex; align-items:center; justify-content:center; font-weight:900; color:#fff; font-size: 18px }
 		.logo-redot { background: linear-gradient(135deg,#ff6a88,#ff9966) }
 		.logo-wise { background: linear-gradient(135deg,#00b9ff,#0077ff) }
@@ -111,53 +123,70 @@
 				<span>▾</span>
 			</button>
 			<div class="dropdown-menu" id="service-dd-menu">
-				<div class="option" data-value="redotpay">
-					<span class="provider-logo logo-redot">R</span>
-					<span><div style="font-weight:800">RedotPay</div><div class="meta">Карта/кошелёк</div></span>
+				<div class="search-container">
+					<input type="text" id="service-search" placeholder="Поиск сервиса..." class="search-input">
 				</div>
-				<div class="option" data-value="wise">
-					<span class="provider-logo logo-wise">W</span>
-					<span><div style="font-weight:800">Wise</div><div class="meta">Банковский перевод</div></span>
-				</div>
-				<div class="option" data-value="skrill">
-					<span class="provider-logo logo-skrill">S</span>
-					<span><div style="font-weight:800">Skrill</div><div class="meta">Кошелёк</div></span>
-				</div>
-				<div class="option" data-value="bybit">
-					<span class="provider-logo logo-bybit">B</span>
-					<span><div style="font-weight:800">Bybit</div><div class="meta">Криптобиржа</div></span>
-				</div>
-				<div class="option" data-value="kraken">
-					<span class="provider-logo logo-kraken">K</span>
-					<span><div style="font-weight:800">Kraken</div><div class="meta">Криптобиржа</div></span>
-				</div>
-				<div class="option" data-value="neteller">
-					<span class="provider-logo logo-neteller">N</span>
-					<span><div style="font-weight:800">Neteller</div><div class="meta">Кошелёк</div></span>
-				</div>
-				<div class="option" data-value="bitget">
-					<span class="provider-logo logo-bitget">BG</span>
-					<span><div style="font-weight:800">Bitget</div><div class="meta">Криптобиржа</div></span>
-				</div>
-				<div class="option" data-value="payoneer">
-					<span class="provider-logo logo-payoneer">P</span>
-					<span><div style="font-weight:800">Payoneer</div><div class="meta">Платёжная система</div></span>
-				</div>
-				<div class="option" data-value="spenda">
-					<span class="provider-logo logo-spenda">SP</span>
-					<span><div style="font-weight:800">Spenda</div><div class="meta">Виртуальная карта</div></span>
-				</div>
-				<div class="option" data-value="paypal">
-					<span class="provider-logo logo-paypal">PP</span>
-					<span><div style="font-weight:800">PayPal</div><div class="meta">Платёжная система</div></span>
-				</div>
-				<div class="option" data-value="grey">
-					<span class="provider-logo logo-grey">G</span>
-					<span><div style="font-weight:800">Grey</div><div class="meta">Виртуальная карта</div></span>
-				</div>
-				<div class="option" data-value="hexacard">
-					<span class="provider-logo logo-hexacard">H</span>
-					<span><div style="font-weight:800">HexaCard</div><div class="meta">Виртуальная карта</div></span>
+				<div class="dropdown-content" id="dropdown-content">
+					<div class="group">
+						<div class="group-title">Криптобиржи</div>
+						<div class="option" data-value="bybit" data-category="crypto">
+							<span class="provider-logo logo-bybit">B</span>
+							<span><div style="font-weight:800">Bybit</div><div class="meta">Криптобиржа</div></span>
+						</div>
+						<div class="option" data-value="kraken" data-category="crypto">
+							<span class="provider-logo logo-kraken">K</span>
+							<span><div style="font-weight:800">Kraken</div><div class="meta">Криптобиржа</div></span>
+						</div>
+						<div class="option" data-value="bitget" data-category="crypto">
+							<span class="provider-logo logo-bitget">BG</span>
+							<span><div style="font-weight:800">Bitget</div><div class="meta">Криптобиржа</div></span>
+						</div>
+					</div>
+					<div class="group">
+						<div class="group-title">Кошельки и платёжные системы</div>
+						<div class="option" data-value="redotpay" data-category="wallet">
+							<span class="provider-logo logo-redot">R</span>
+							<span><div style="font-weight:800">RedotPay</div><div class="meta">Карта/кошелёк</div></span>
+						</div>
+						<div class="option" data-value="skrill" data-category="wallet">
+							<span class="provider-logo logo-skrill">S</span>
+							<span><div style="font-weight:800">Skrill</div><div class="meta">Кошелёк</div></span>
+						</div>
+						<div class="option" data-value="neteller" data-category="wallet">
+							<span class="provider-logo logo-neteller">N</span>
+							<span><div style="font-weight:800">Neteller</div><div class="meta">Кошелёк</div></span>
+						</div>
+						<div class="option" data-value="payoneer" data-category="wallet">
+							<span class="provider-logo logo-payoneer">P</span>
+							<span><div style="font-weight:800">Payoneer</div><div class="meta">Платёжная система</div></span>
+						</div>
+						<div class="option" data-value="paypal" data-category="wallet">
+							<span class="provider-logo logo-paypal">PP</span>
+							<span><div style="font-weight:800">PayPal</div><div class="meta">Платёжная система</div></span>
+						</div>
+					</div>
+					<div class="group">
+						<div class="group-title">Банковские переводы</div>
+						<div class="option" data-value="wise" data-category="bank">
+							<span class="provider-logo logo-wise">W</span>
+							<span><div style="font-weight:800">Wise</div><div class="meta">Банковский перевод</div></span>
+						</div>
+					</div>
+					<div class="group">
+						<div class="group-title">Виртуальные карты</div>
+						<div class="option" data-value="spenda" data-category="card">
+							<span class="provider-logo logo-spenda">SP</span>
+							<span><div style="font-weight:800">Spenda</div><div class="meta">Виртуальная карта</div></span>
+						</div>
+						<div class="option" data-value="grey" data-category="card">
+							<span class="provider-logo logo-grey">G</span>
+							<span><div style="font-weight:800">Grey</div><div class="meta">Виртуальная карта</div></span>
+						</div>
+						<div class="option" data-value="hexacard" data-category="card">
+							<span class="provider-logo logo-hexacard">H</span>
+							<span><div style="font-weight:800">HexaCard</div><div class="meta">Виртуальная карта</div></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -325,6 +354,9 @@ const providerInput = document.getElementById('service');
   const menu = document.getElementById('service-dd-menu');
   const hidden = document.getElementById('service');
   const link = document.getElementById('service-guide-link');
+  const searchInput = document.getElementById('service-search');
+  const dropdownContent = document.getElementById('dropdown-content');
+  
   const guideMap = { 
     redotpay: '/guides/redotpay.html', 
     wise: '/guides/wise.html', 
@@ -366,18 +398,92 @@ const providerInput = document.getElementById('service');
     recalc();
   }
 
-  toggle.addEventListener('click', ()=>{
+  function filterOptions(searchTerm) {
+    const options = dropdownContent.querySelectorAll('.option');
+    const groups = dropdownContent.querySelectorAll('.group');
+    
+    options.forEach(option => {
+      const name = option.querySelector('div[style*="font-weight:800"]').textContent.toLowerCase();
+      const meta = option.querySelector('.meta').textContent.toLowerCase();
+      const matches = name.includes(searchTerm.toLowerCase()) || meta.includes(searchTerm.toLowerCase());
+      
+      option.classList.toggle('hidden', !matches);
+    });
+    
+    // Hide groups that have no visible options
+    groups.forEach(group => {
+      const visibleOptions = group.querySelectorAll('.option:not(.hidden)');
+      group.style.display = visibleOptions.length > 0 ? 'block' : 'none';
+    });
+  }
+
+  function clearSearch() {
+    searchInput.value = '';
+    const options = dropdownContent.querySelectorAll('.option');
+    const groups = dropdownContent.querySelectorAll('.group');
+    
+    options.forEach(option => option.classList.remove('hidden'));
+    groups.forEach(group => group.style.display = 'block');
+  }
+
+  toggle.addEventListener('click', (e)=>{
+    e.stopPropagation();
     dd.classList.toggle('open');
+    if (dd.classList.contains('open')) {
+      searchInput.focus();
+    } else {
+      clearSearch();
+    }
   });
-  menu.addEventListener('click', (e)=>{
+  
+  searchInput.addEventListener('input', (e) => {
+    filterOptions(e.target.value);
+  });
+  
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      dd.classList.remove('open');
+      clearSearch();
+    }
+  });
+  
+  dropdownContent.addEventListener('click', (e)=>{
     const opt = e.target.closest('.option');
-    if(!opt) return;
+    if(!opt || opt.classList.contains('hidden')) return;
     setValue(opt.getAttribute('data-value'));
     dd.classList.remove('open');
+    clearSearch();
   });
+  
   document.addEventListener('click', (e)=>{
-    if(!dd.contains(e.target)) dd.classList.remove('open');
+    if(!dd.contains(e.target)) {
+      dd.classList.remove('open');
+      clearSearch();
+    }
   });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!dd.classList.contains('open')) return;
+    
+    const visibleOptions = Array.from(dropdownContent.querySelectorAll('.option:not(.hidden)'));
+    const currentIndex = visibleOptions.findIndex(opt => opt.getAttribute('data-value') === hidden.value);
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (currentIndex + 1) % visibleOptions.length;
+      setValue(visibleOptions[nextIndex].getAttribute('data-value'));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prevIndex = currentIndex <= 0 ? visibleOptions.length - 1 : currentIndex - 1;
+      setValue(visibleOptions[prevIndex].getAttribute('data-value'));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      dd.classList.remove('open');
+      clearSearch();
+    }
+  });
+  
   // init
   setValue('redotpay');
 })();

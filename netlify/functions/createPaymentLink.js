@@ -5,7 +5,20 @@ export default async (req, context) => {
 		if (!email || !service || !amountUsd) {
 			return new Response(JSON.stringify({ error: 'email, service, amountUsd required' }), { status: 400, headers: { 'content-type': 'application/json' } });
 		}
-		const rates = { redotpay: 100, wise: 101, skrill: 102 };
+		const rates = { 
+			redotpay: 100, 
+			wise: 101, 
+			skrill: 102, 
+			bybit: 103, 
+			kraken: 104, 
+			neteller: 105, 
+			bitget: 106, 
+			payoneer: 107, 
+			spenda: 108, 
+			paypal: 109, 
+			grey: 110, 
+			hexacard: 111 
+		};
 		const amountRubInt = Math.max(0, Math.round(Number(amountUsd) * (rates[service] || 100)));
 		const amountRub = Number((amountRubInt).toFixed(2));
 		const wataToken = process.env.WATA_API_TOKEN;

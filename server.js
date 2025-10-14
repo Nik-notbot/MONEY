@@ -34,7 +34,7 @@ app.get('/favicon.svg', (_req, res) => {
 	res.sendFile(path.join(publicPath, 'favicon.svg'));
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
 	console.log(`heymoney server listening on port ${PORT}`);
 });

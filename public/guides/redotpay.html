@@ -19,11 +19,14 @@
     .success{background:#0d2d1a;border:1px solid #00d19a;border-radius:8px;padding:12px;margin:16px 0;color:#66ffb3}
     .back-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#1b2447;border-radius:8px;color:#6aa2ff;transition:background 0.2s}
     .back-btn:hover{background:#2a3a5c}
-    .step-image{margin:24px 0;background:#0a0e1a;border-radius:12px;overflow:hidden;border:1px solid #1b2447}
-    .step-image img{width:100%;height:auto;display:block;max-height:400px;object-fit:contain}
-    .step-caption{padding:16px;background:#0f152b}
-    .step-caption h3{font-size:16px;margin:0 0 8px;color:#00d19a}
-    .step-caption p{margin:0;color:#a4b4c8;line-height:1.5}
+    .steps-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px}
+    @media (min-width:768px){.steps-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+    .step-image{background:#0a0e1a;border-radius:12px;overflow:hidden;border:1px solid #1b2447;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:transform 0.2s,box-shadow 0.2s}
+    .step-image:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+    .step-image img{width:100%;height:auto;display:block;max-height:250px;object-fit:cover;object-position:top}
+    .step-caption{padding:12px 16px;background:#0f152b;border-top:1px solid #1b2447}
+    .step-caption h3{font-size:15px;margin:0 0 6px;color:#00d19a;font-weight:600}
+    .step-caption p{margin:0;color:#a4b4c8;line-height:1.4;font-size:14px}
   </style>
 </head>
 <body>
@@ -48,35 +51,37 @@
     <div class="card">
       <h2>📸 Пошаговая инструкция с скриншотами</h2>
       
-      <div class="step-image">
-        <img src="/guides/assets/redotpay/images/1.png" alt="Шаг 1: Вход в RedotPay" />
-        <div class="step-caption">
-          <h3>Шаг 1: Вход в RedotPay</h3>
-          <p>Откройте сайт RedotPay и авторизуйтесь в личном кабинете</p>
+      <div class="steps-grid">
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/1.png" alt="Шаг 1: Вход в RedotPay" />
+          <div class="step-caption">
+            <h3>Шаг 1: Вход в RedotPay</h3>
+            <p>Откройте сайт RedotPay и авторизуйтесь в личном кабинете</p>
+          </div>
         </div>
-      </div>
 
-      <div class="step-image">
-        <img src="/guides/assets/redotpay/images/2.png" alt="Шаг 2: Раздел кошельков" />
-        <div class="step-caption">
-          <h3>Шаг 2: Раздел кошельков</h3>
-          <p>Найдите и откройте раздел "Кошельки" или "Wallets" в главном меню</p>
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/2.png" alt="Шаг 2: Раздел кошельков" />
+          <div class="step-caption">
+            <h3>Шаг 2: Раздел кошельков</h3>
+            <p>Найдите и откройте раздел "Кошельки" или "Wallets" в главном меню</p>
+          </div>
         </div>
-      </div>
 
-      <div class="step-image">
-        <img src="/guides/assets/redotpay/images/3.png" alt="Шаг 3: Выбор сети BSC" />
-        <div class="step-caption">
-          <h3>Шаг 3: Выбор сети BSC (BEP-20)</h3>
-          <p>Убедитесь, что выбран кошелёк в сети Binance Smart Chain (BSC) с токенами BEP-20</p>
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/3.png" alt="Шаг 3: Выбор сети BSC" />
+          <div class="step-caption">
+            <h3>Шаг 3: Выбор сети BSC (BEP-20)</h3>
+            <p>Убедитесь, что выбран кошелёк в сети Binance Smart Chain (BSC) с токенами BEP-20</p>
+          </div>
         </div>
-      </div>
 
-      <div class="step-image">
-        <img src="/guides/assets/redotpay/images/4.png" alt="Шаг 4: Получение адреса" />
-        <div class="step-caption">
-          <h3>Шаг 4: Получение адреса кошелька</h3>
-          <p>Нажмите кнопку "Получить" или "Receive" и скопируйте адрес (начинается с 0x...)</p>
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/4.png" alt="Шаг 4: Получение адреса" />
+          <div class="step-caption">
+            <h3>Шаг 4: Получение адреса кошелька</h3>
+            <p>Нажмите кнопку "Получить" или "Receive" и скопируйте адрес (начинается с 0x...)</p>
+          </div>
         </div>
       </div>
     </div>

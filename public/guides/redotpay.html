@@ -19,6 +19,11 @@
     .success{background:#0d2d1a;border:1px solid #00d19a;border-radius:8px;padding:12px;margin:16px 0;color:#66ffb3}
     .back-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#1b2447;border-radius:8px;color:#6aa2ff;transition:background 0.2s}
     .back-btn:hover{background:#2a3a5c}
+    .step-image{margin:24px 0;background:#0a0e1a;border-radius:12px;overflow:hidden;border:1px solid #1b2447}
+    .step-image img{width:100%;height:auto;display:block;max-height:400px;object-fit:contain}
+    .step-caption{padding:16px;background:#0f152b}
+    .step-caption h3{font-size:16px;margin:0 0 8px;color:#00d19a}
+    .step-caption p{margin:0;color:#a4b4c8;line-height:1.5}
   </style>
 </head>
 <body>
@@ -41,29 +46,39 @@
     </div>
 
     <div class="card">
-      <h2>📝 Пошаговая инструкция</h2>
-      <ol>
-        <li><strong>Войдите в RedotPay</strong><br>
-          Откройте сайт RedotPay и авторизуйтесь в личном кабинете.</li>
-        
-        <li><strong>Перейдите в раздел кошельков</strong><br>
-          Найдите и откройте раздел "Кошельки" или "Wallets" в главном меню.</li>
-        
-        <li><strong>Выберите сеть BSC (BEP-20)</strong><br>
-          Убедитесь, что выбран кошелёк в сети Binance Smart Chain (BSC) с токенами BEP-20.</li>
-        
-        <li><strong>Создайте кошелёк (если нужно)</strong><br>
-          Если у вас ещё нет кошелька в сети BSC, создайте новый, выбрав соответствующую валюту.</li>
-        
-        <li><strong>Получите адрес кошелька</strong><br>
-          Нажмите кнопку "Получить" или "Receive" рядом с вашим BSC кошельком.</li>
-        
-        <li><strong>Скопируйте адрес</strong><br>
-          Скопируйте адрес кошелька (он начинается с "0x" и содержит 42 символа).</li>
-        
-        <li><strong>Вставьте в heymoney</strong><br>
-          Вернитесь на главную страницу heymoney и вставьте скопированный адрес в поле "Адрес BEP-20".</li>
-      </ol>
+      <h2>📸 Пошаговая инструкция с скриншотами</h2>
+      
+      <div class="step-image">
+        <img src="/guides/assets/redotpay/images/step1.jpg" alt="Шаг 1: Вход в RedotPay" />
+        <div class="step-caption">
+          <h3>Шаг 1: Вход в RedotPay</h3>
+          <p>Откройте сайт RedotPay и авторизуйтесь в личном кабинете</p>
+        </div>
+      </div>
+
+      <div class="step-image">
+        <img src="/guides/assets/redotpay/images/step2.jpg" alt="Шаг 2: Раздел кошельков" />
+        <div class="step-caption">
+          <h3>Шаг 2: Раздел кошельков</h3>
+          <p>Найдите и откройте раздел "Кошельки" или "Wallets" в главном меню</p>
+        </div>
+      </div>
+
+      <div class="step-image">
+        <img src="/guides/assets/redotpay/images/step3.jpg" alt="Шаг 3: Выбор сети BSC" />
+        <div class="step-caption">
+          <h3>Шаг 3: Выбор сети BSC (BEP-20)</h3>
+          <p>Убедитесь, что выбран кошелёк в сети Binance Smart Chain (BSC) с токенами BEP-20</p>
+        </div>
+      </div>
+
+      <div class="step-image">
+        <img src="/guides/assets/redotpay/images/step4.jpg" alt="Шаг 4: Получение адреса" />
+        <div class="step-caption">
+          <h3>Шаг 4: Получение адреса кошелька</h3>
+          <p>Нажмите кнопку "Получить" или "Receive" и скопируйте адрес (начинается с 0x...)</p>
+        </div>
+      </div>
     </div>
 
     <div class="warning">
@@ -72,18 +87,6 @@
 
     <div class="success">
       <strong>✅ Готово!</strong> После ввода правильного адреса BEP-20 вы сможете пополнить свой RedotPay кошелёк через heymoney, оплатив в рублях.
-    </div>
-
-    <div class="card">
-      <h2>❓ Часто задаваемые вопросы</h2>
-      <p><strong>Q: Как отличить адрес BSC от других сетей?</strong><br>
-      A: Адрес BSC (BEP-20) всегда начинается с "0x" и содержит 42 символа. В интерфейсе RedotPay должна быть указана сеть "BSC" или "BEP-20".</p>
-      
-      <p><strong>Q: Что делать, если не вижу сеть BSC в RedotPay?</strong><br>
-      A: Убедитесь, что ваш аккаунт RedotPay поддерживает криптовалюты. Возможно, нужно пройти дополнительную верификацию.</p>
-      
-      <p><strong>Q: Сколько времени займёт пополнение?</strong><br>
-      A: Обычно пополнение происходит в течение 5-30 минут после подтверждения оплаты в heymoney.</p>
     </div>
 
     <div class="card">

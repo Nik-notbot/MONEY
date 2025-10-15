@@ -3,29 +3,99 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Neteller — как получить адрес кошелька</title>
+  <title>RedotPay — как получить адрес кошелька</title>
   <style>
     body{font-family:system-ui,sans-serif;margin:0;background:#0b0f19;color:#e6e9ef}
     .wrap{max-width:880px;margin:0 auto;padding:24px}
-    a{color:#6aa2ff}
-    .card{background:#0f152b;border:1px solid #1b2447;border-radius:16px;padding:18px}
-    h1{font-size:20px;margin:0 0 12px}
-    ol{line-height:1.6}
+    a{color:#6aa2ff;text-decoration:none}
+    .card{background:#0f152b;border:1px solid #1b2447;border-radius:16px;padding:24px;margin:16px 0}
+    h1{font-size:24px;margin:0 0 16px;color:#00d19a}
+    h2{font-size:18px;margin:16px 0 8px;color:#3fa6ff}
+    ol{line-height:1.8;padding-left:20px}
+    li{margin:8px 0}
+    .video-container{background:#0a0e1a;border-radius:12px;overflow:hidden;margin:16px 0}
+    video{width:100%;height:auto;display:block}
+    .warning{background:#2d1b00;border:1px solid #ff6b35;border-radius:8px;padding:12px;margin:16px 0;color:#ffb366}
+    .success{background:#0d2d1a;border:1px solid #00d19a;border-radius:8px;padding:12px;margin:16px 0;color:#66ffb3}
+    .back-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:#1b2447;border-radius:8px;color:#6aa2ff;transition:background 0.2s}
+    .back-btn:hover{background:#2a3a5c}
+    .steps-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px}
+    @media (min-width:768px){.steps-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+    .step-image{background:#0a0e1a;border-radius:12px;overflow:hidden;border:1px solid #1b2447;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:transform 0.2s,box-shadow 0.2s}
+    .step-image:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+    .step-image img{width:100%;height:auto;display:block;max-height:400px;object-fit:contain}
+    .step-caption{padding:12px 16px;background:#0f152b;border-top:1px solid #1b2447}
+    .step-caption h3{font-size:15px;margin:0 0 6px;color:#00d19a;font-weight:600}
+    .step-caption p{margin:0;color:#a4b4c8;line-height:1.4;font-size:14px}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a href="/" style="text-decoration:none">← Назад</a>
+    <a href="/" class="back-btn">← Назад к heymoney</a>
+    
     <div class="card">
-      <h1>Neteller: как получить адрес кошелька</h1>
-      <ol>
-        <li>Войдите в аккаунт Neteller и перейдите в раздел «Кошелёк».</li>
-        <li>Выберите нужную криптовалюту (USDT, BTC, ETH и др.).</li>
-        <li>Нажмите «Пополнить» и выберите сеть (BEP-20, ERC-20, TRC-20).</li>
-        <li>Скопируйте адрес кошелька (начинается с 0x... для BEP-20).</li>
-        <li>Вставьте адрес в поле «Адрес BEP-20» на главной странице heymoney.</li>
-      </ol>
-      <p>Neteller — популярный электронный кошелёк для онлайн-платежей.</p>
+      <h1>RedotPay: как получить адрес кошелька</h1>
+      <p>Пошаговая инструкция по получению адреса BEP-20 кошелька в RedotPay для пополнения через heymoney.</p>
+    </div>
+
+    <div class="card">
+      <h2>📹 Видео-инструкция</h2>
+      <div class="video-container">
+        <video controls>
+          <source src="/guides/assets/redotpay/video/instruction.mp4" type="video/mp4">
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📸 Пошаговая инструкция с скриншотами</h2>
+      
+      <div class="steps-grid">
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/1.png" alt="Шаг 1: Вход в RedotPay" />
+          <div class="step-caption">
+            <h3>Шаг 1: Вход в RedotPay</h3>
+            <p>Войдите в приложение RedotPay, авторизуйтесь в личном кабинете и нажмите огромный плюсик</p>
+          </div>
+        </div>
+
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/2.png" alt="Шаг 2: Раздел кошельков" />
+          <div class="step-caption">
+            <h3>Шаг 2: Раздел кошельков</h3>
+            <p>Из всего списка кошельков выберете самый 1 USDT</p>
+          </div>
+        </div>
+
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/3.png" alt="Шаг 3: Выбор сети BSC" />
+          <div class="step-caption">
+            <h3>Шаг 3: Выбор сети BSC (BEP-20)</h3>
+            <p>Нажмите на сеть с название "BNB Smart Chain(BEP20)"</p>
+          </div>
+        </div>
+
+        <div class="step-image">
+          <img src="/guides/assets/redotpay/images/4.png" alt="Шаг 4: Получение адреса" />
+          <div class="step-caption">
+            <h3>Шаг 4: Получение адреса кошелька</h3>
+            <p>Готово! Теперь у вас есть криптовалютный счет вашего аккаунта</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning">
+      <strong>⚠️ Важно:</strong> Убедитесь, что вы копируете адрес именно в сети BSC (BEP-20). Адреса других сетей (например, Ethereum) не подойдут для пополнения через heymoney.
+    </div>
+
+    <div class="success">
+      <strong>✅ Готово!</strong> После ввода правильного адреса BEP-20 вы сможете пополнить свой RedotPay кошелёк через heymoney, оплатив в рублях.
+    </div>
+
+    <div class="card">
+      <p><strong>Нужна помощь?</strong> Если у вас возникли вопросы, обратитесь в поддержку RedotPay или свяжитесь с нами через Telegram.</p>
     </div>
   </div>
 </body>

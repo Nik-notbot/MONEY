@@ -79,6 +79,12 @@ exports.handler = async (event, context) => {
         fixedFee: 45,
         minCommission: 105,
         description: 'Комиссия Revolut: 1.6% + 45₽ (минимум 105₽)'
+      },
+      'Neteller': {
+        commissionPercent: 1.9,
+        fixedFee: 35,
+        minCommission: 125,
+        description: 'Комиссия Neteller: 1.9% + 35₽ (минимум 125₽)'
       }
     };
 

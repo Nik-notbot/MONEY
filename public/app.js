@@ -4,7 +4,8 @@ const services = [
     { id: 'ByBit', name: 'ByBit', description: 'Криптовалютная биржа', fieldType: 'BEP-20' },
     { id: 'RedotPay', name: 'RedotPay', description: 'Платежная система', fieldType: 'BEP-20' },
     { id: 'Grey', name: 'Grey', description: 'Финансовый сервис', fieldType: 'BEP-20' },
-    { id: 'Revolut', name: 'Revolut', description: 'Банковское приложение', fieldType: 'IBAN' }
+    { id: 'Revolut', name: 'Revolut', description: 'Банковское приложение', fieldType: 'IBAN' },
+    { id: 'Neteller', name: 'Neteller', description: 'Электронный кошелек', fieldType: 'IBAN' }
 ];
 
 // Инициализация приложения
@@ -109,7 +110,8 @@ function updateCalculatorFields(serviceId) {
         'ByBit': 'instructions-bybit.html',
         'RedotPay': 'instructions-redotpay.html',
         'Grey': 'instructions-grey.html',
-        'Revolut': 'instructions-revolut.html'
+        'Revolut': 'instructions-revolut.html',
+        'Neteller': 'instructions-neteller.html'
     };
     
     // Показываем специфичные поля в зависимости от типа

@@ -27,6 +27,10 @@
 - `instructions-revolut/photos/` - папка для фотографий
 - `instructions-revolut/videos/` - папка для видео
 
+### Neteller
+- `instructions-neteller/photos/` - папка для фотографий
+- `instructions-neteller/videos/` - папка для видео
+
 ## Как загрузить файлы
 
 1. Загрузите фото в соответствующие папки `photos/` каждого сервиса

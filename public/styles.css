@@ -418,6 +418,23 @@ section h2::after {
     letter-spacing: 0.3px;
 }
 
+.instruction-link {
+    display: inline-block;
+    margin-left: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    opacity: 0.9;
+}
+
+.instruction-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+    opacity: 1;
+}
+
 .amount-fields {
     animation: fadeIn 0.3s ease-in;
 }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструкция по получению реквизитов - HeyMoney</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .document-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .document-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .document-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem;
+            line-height: 1.8;
+        }
+        .document-content h2 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .document-content h3 {
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+        .document-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        .document-content ul, .document-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            color: var(--text-secondary);
+        }
+        .document-content li {
+            margin-bottom: 0.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .service-instruction {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .service-instruction:last-child {
+            border-bottom: none;
+        }
+        .service-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .service-badge {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <a href="index.html" class="back-link">← Вернуться на главную</a>
+        
+        <div class="document-header">
+            <h1>Инструкция по получению реквизитов</h1>
+            <p class="subtitle">Как получить IBAN или BEP-20 адрес для каждого сервиса</p>
+        </div>
+
+        <div class="document-content">
+            <div class="service-instruction">
+                <div class="service-title">
+                    <span class="service-badge">IBAN</span>
+                    <h2>Wise</h2>
+                </div>
+                <ol>
+                    <li>Войдите в свой аккаунт Wise или зарегистрируйтесь на сайте wise.com</li>
+                    <li>Перейдите в раздел "Balances" (Балансы)</li>
+                    <li>Выберите валюту, для которой нужен IBAN (например, EUR, USD, GBP)</li>
+                    <li>Нажмите на выбранную валюту</li>
+                    <li>В разделе "Account details" (Детали счета) вы найдете IBAN</li>
+                    <li>Скопируйте IBAN - это длинная строка, начинающаяся с двух букв (например, GB, DE, BE)</li>
+                    <li>Вставьте скопированный IBAN в поле на нашем сайте</li>
+                </ol>
+                <p><strong>Важно:</strong> Убедитесь, что копируете полный IBAN без пробелов. IBAN обычно состоит из 15-34 символов.</p>
+            </div>
+
+            <div class="service-instruction">
+                <div class="service-title">
+                    <span class="service-badge">BEP-20</span>
+                    <h2>ByBit</h2>
+                </div>
+                <ol>
+                    <li>Войдите в свой аккаунт ByBit</li>
+                    <li>Перейдите в раздел "Assets" (Активы) → "Deposit" (Пополнение)</li>
+                    <li>Выберите криптовалюту (например, USDT, BUSD)</li>
+                    <li>Выберите сеть "BEP-20 (BSC)"</li>
+                    <li>Скопируйте адрес кошелька - это строка, начинающаяся с "0x"</li>
+                    <li>Проверьте, что выбрана именно сеть BEP-20, а не другая (например, не ERC-20)</li>
+                    <li>Вставьте скопированный BEP-20 адрес в поле на нашем сайте</li>
+                </ol>
+                <p><strong>Важно:</strong> Используйте только сеть BEP-20. Отправка средств на адрес другой сети приведет к потере средств.</p>
+            </div>
+
+            <div class="service-instruction">
+                <div class="service-title">
+                    <span class="service-badge">BEP-20</span>
+                    <h2>RedotPay</h2>
+                </div>
+                <ol>
+                    <li>Войдите в свой аккаунт RedotPay</li>
+                    <li>Перейдите в раздел "Wallet" (Кошелек) или "Deposit" (Пополнение)</li>
+                    <li>Выберите криптовалюту (USDT, BUSD и т.д.)</li>
+                    <li>Выберите сеть "BEP-20" или "BSC" (Binance Smart Chain)</li>
+                    <li>Скопируйте адрес кошелька (начинается с "0x")</li>
+                    <li>Убедитесь, что адрес скопирован полностью</li>
+                    <li>Вставьте BEP-20 адрес в поле на нашем сайте</li>
+                </ol>
+                <p><strong>Важно:</strong> Всегда проверяйте, что выбрана правильная сеть BEP-20 перед копированием адреса.</p>
+            </div>
+
+            <div class="service-instruction">
+                <div class="service-title">
+                    <span class="service-badge">BEP-20</span>
+                    <h2>Grey</h2>
+                </div>
+                <ol>
+                    <li>Войдите в свой аккаунт Grey</li>
+                    <li>Откройте раздел "Кошелек" или "Пополнение"</li>
+                    <li>Выберите нужную криптовалюту</li>
+                    <li>В списке сетей выберите "BEP-20" или "BSC"</li>
+                    <li>Скопируйте адрес кошелька (формат: 0x...)</li>
+                    <li>Проверьте корректность скопированного адреса</li>
+                    <li>Вставьте адрес в поле BEP-20 на нашем сайте</li>
+                </ol>
+                <p><strong>Важно:</strong> Адрес должен начинаться с "0x" и содержать 42 символа. Не используйте адреса других сетей.</p>
+            </div>
+
+            <div class="service-instruction">
+                <div class="service-title">
+                    <span class="service-badge">IBAN</span>
+                    <h2>Revolut</h2>
+                </div>
+                <ol>
+                    <li>Откройте приложение Revolut или войдите на revolut.com</li>
+                    <li>Перейдите в раздел "Accounts" (Счета)</li>
+                    <li>Выберите нужную валюту (EUR, GBP, USD и т.д.)</li>
+                    <li>Нажмите на выбранный счет</li>
+                    <li>В разделе "Account details" найдите IBAN</li>
+                    <li>Нажмите на IBAN, чтобы скопировать его</li>
+                    <li>Проверьте, что IBAN скопирован полностью</li>
+                    <li>Вставьте IBAN в поле на нашем сайте</li>
+                </ol>
+                <p><strong>Важно:</strong> IBAN для разных валют может отличаться. Убедитесь, что используете правильный IBAN для нужной валюты.</p>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 107, 107, 0.1); border-radius: 12px; border: 1px solid rgba(255, 107, 107, 0.2);">
+                <h3 style="color: var(--primary-color); margin-top: 0;">⚠️ Общие рекомендации</h3>
+                <ul>
+                    <li>Всегда проверяйте правильность скопированного адреса перед отправкой средств</li>
+                    <li>Для IBAN: убедитесь, что копируете полный адрес без пробелов</li>
+                    <li>Для BEP-20: проверьте, что адрес начинается с "0x" и содержит 42 символа</li>
+                    <li>Никогда не отправляйте средства на адрес другой сети (например, не отправляйте на ERC-20 адрес, если требуется BEP-20)</li>
+                    <li>При возникновении проблем обращайтесь в поддержку соответствующего сервиса</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

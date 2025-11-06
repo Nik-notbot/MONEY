@@ -59,29 +59,6 @@ function selectService(serviceId) {
             item.classList.add('selected');
         }
     });
-    
-    showServiceInfo(serviceId);
-}
-
-// Показать информацию о сервисе
-function showServiceInfo(serviceId) {
-    const serviceInfo = document.getElementById('serviceInfo');
-    const serviceInfoName = document.getElementById('serviceInfoName');
-    const serviceInfoDescription = document.getElementById('serviceInfoDescription');
-
-    if (!serviceId) {
-        serviceInfo.style.display = 'none';
-        return;
-    }
-
-    const service = services.find(s => s.id === serviceId);
-    if (service) {
-        serviceInfoName.textContent = service.name;
-        serviceInfoDescription.textContent = service.description;
-        serviceInfo.style.display = 'block';
-    } else {
-        serviceInfo.style.display = 'none';
-    }
 }
 
 // Инициализация калькулятора

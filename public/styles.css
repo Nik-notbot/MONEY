@@ -368,6 +368,30 @@ section h2::after {
     gap: 1rem;
 }
 
+.calculator-section:not(.has-service) .calculator-card {
+    gap: 0;
+}
+
+.calculator-section:not(.has-service) .form-group[style*="display: none"],
+.calculator-section:not(.has-service) #emailGroup,
+.calculator-section:not(.has-service) #ibanGroup,
+.calculator-section:not(.has-service) #bep20Group,
+.calculator-section:not(.has-service) #termsGroup {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+.calculator-section:not(.has-service) .amount-fields {
+    margin-bottom: 0;
+}
+
+.calculator-section:not(.has-service) .btn {
+    margin-top: 1.5rem;
+}
+
 .form-group {
     margin-bottom: 1rem;
 }

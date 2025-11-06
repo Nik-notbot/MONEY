@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Инициализация списка сервисов
 function initializeServices() {
     const servicesDropdown = document.getElementById('servicesDropdown');
-    const serviceSelect = document.getElementById('serviceSelect');
 
     services.forEach(service => {
         // Добавляем опцию в выпадающий список сервисов
@@ -25,27 +24,11 @@ function initializeServices() {
         dropdownOption.value = service.id;
         dropdownOption.textContent = service.name;
         servicesDropdown.appendChild(dropdownOption);
-
-        // Добавляем опцию в select калькулятора
-        const calcOption = document.createElement('option');
-        calcOption.value = service.id;
-        calcOption.textContent = service.name;
-        serviceSelect.appendChild(calcOption);
     });
 
     // Обработчик изменения выпадающего списка сервисов
     servicesDropdown.addEventListener('change', (e) => {
         const serviceId = e.target.value;
-        showServiceInfo(serviceId);
-        // Синхронизируем с select калькулятора
-        serviceSelect.value = serviceId;
-    });
-
-    // Обработчик изменения select калькулятора
-    serviceSelect.addEventListener('change', (e) => {
-        const serviceId = e.target.value;
-        // Синхронизируем с выпадающим списком сервисов
-        servicesDropdown.value = serviceId;
         showServiceInfo(serviceId);
     });
 }
@@ -88,12 +71,12 @@ function initializeCalculator() {
 
 // Обработка расчета
 async function handleCalculate() {
-    const service = document.getElementById('serviceSelect').value;
+    const service = document.getElementById('servicesDropdown').value;
     const amount = parseFloat(document.getElementById('amountInput').value);
 
     // Валидация
     if (!service) {
-        showError('Пожалуйста, выберите сервис');
+        showError('Пожалуйста, выберите сервис в блоке "Доступные сервисы"');
         return;
     }
 

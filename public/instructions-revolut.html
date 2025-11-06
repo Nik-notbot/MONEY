@@ -57,75 +57,6 @@
         .back-link:hover {
             text-decoration: underline;
         }
-        .media-section {
-            margin: 2rem 0;
-        }
-        .media-upload {
-            background: rgba(26, 31, 58, 0.4);
-            border: 2px dashed var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            margin: 1.5rem 0;
-            transition: all 0.3s ease;
-        }
-        .media-upload:hover {
-            border-color: var(--primary-color);
-            background: rgba(26, 31, 58, 0.6);
-        }
-        .media-upload input[type="file"] {
-            display: none;
-        }
-        .upload-label {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .upload-label:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        .media-preview {
-            margin-top: 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .media-item {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(26, 31, 58, 0.4);
-        }
-        .media-item img, .media-item video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .media-item .remove-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: rgba(255, 107, 107, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .media-item .remove-btn:hover {
-            background: var(--error-color);
-        }
     </style>
 </head>
 <body>
@@ -151,67 +82,8 @@
             </ol>
             <p><strong>Важно:</strong> IBAN для разных валют может отличаться. Убедитесь, что используете правильный IBAN для нужной валюты.</p>
 
-            <div class="media-section">
-                <h3>Фотографии и видео инструкции</h3>
-                <p>Вы можете загрузить скриншоты или видео для более подробной инструкции:</p>
-                
-                <div class="media-upload">
-                    <label for="photo-upload" class="upload-label">📷 Загрузить фото</label>
-                    <input type="file" id="photo-upload" accept="image/*" multiple>
-                </div>
-
-                <div class="media-upload">
-                    <label for="video-upload" class="upload-label">🎥 Загрузить видео</label>
-                    <input type="file" id="video-upload" accept="video/*" multiple>
-                </div>
-
-                <div class="media-preview" id="mediaPreview"></div>
-            </div>
         </div>
     </div>
 
-    <script>
-        const photoUpload = document.getElementById('photo-upload');
-        const videoUpload = document.getElementById('video-upload');
-        const mediaPreview = document.getElementById('mediaPreview');
-
-        function handleFileUpload(files, isVideo = false) {
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const mediaItem = document.createElement('div');
-                    mediaItem.className = 'media-item';
-                    
-                    if (isVideo) {
-                        const video = document.createElement('video');
-                        video.src = e.target.result;
-                        video.controls = true;
-                        mediaItem.appendChild(video);
-                    } else {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        mediaItem.appendChild(img);
-                    }
-                    
-                    const removeBtn = document.createElement('button');
-                    removeBtn.className = 'remove-btn';
-                    removeBtn.textContent = '×';
-                    removeBtn.onclick = () => mediaItem.remove();
-                    mediaItem.appendChild(removeBtn);
-                    
-                    mediaPreview.appendChild(mediaItem);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        photoUpload.addEventListener('change', (e) => {
-            handleFileUpload(e.target.files, false);
-        });
-
-        videoUpload.addEventListener('change', (e) => {
-            handleFileUpload(e.target.files, true);
-        });
-    </script>
 </body>
 </html>

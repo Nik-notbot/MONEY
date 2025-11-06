@@ -60,71 +60,53 @@
         .media-section {
             margin: 2rem 0;
         }
-        .media-upload {
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .media-block {
             background: rgba(26, 31, 58, 0.4);
-            border: 2px dashed var(--border-color);
+            border: 2px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            margin: 1.5rem 0;
+            padding: 1.5rem;
             transition: all 0.3s ease;
         }
-        .media-upload:hover {
+        .media-block:hover {
             border-color: var(--primary-color);
-            background: rgba(26, 31, 58, 0.6);
-        }
-        .media-upload input[type="file"] {
-            display: none;
-        }
-        .upload-label {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .upload-label:hover {
-            transform: translateY(-2px);
             box-shadow: var(--shadow-md);
         }
-        .media-preview {
-            margin-top: 1.5rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+        .media-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
-        .media-item {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(26, 31, 58, 0.4);
-        }
-        .media-item img, .media-item video {
+        .media-block img {
             width: 100%;
             height: auto;
+            border-radius: 12px;
             display: block;
         }
-        .media-item .remove-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: rgba(255, 107, 107, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .video-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
         }
-        .media-item .remove-btn:hover {
-            background: var(--error-color);
+        .video-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .video-block video {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
         }
     </style>
 </head>
@@ -151,66 +133,55 @@
             <p><strong>Важно:</strong> Всегда проверяйте, что выбрана правильная сеть BEP-20 перед копированием адреса.</p>
 
             <div class="media-section">
-                <h3>Фотографии и видео инструкции</h3>
-                <p>Вы можете загрузить скриншоты или видео для более подробной инструкции:</p>
+                <h3>Визуальная инструкция</h3>
                 
-                <div class="media-upload">
-                    <label for="photo-upload" class="upload-label">📷 Загрузить фото</label>
-                    <input type="file" id="photo-upload" accept="image/*" multiple>
+                <div class="media-grid">
+                    <div class="media-block">
+                        <h4>Шаг 1: Вход в аккаунт</h4>
+                        <img src="media/instructions-redotpay/photos/photo1.jpg" alt="Шаг 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder" style="display: none; padding: 2rem; background: rgba(26, 31, 58, 0.4); border-radius: 12px; text-align: center; color: var(--text-secondary);">
+                            Фото 1: Загрузите photo1.jpg в папку media/instructions-redotpay/photos/
+                        </div>
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 2: Выбор раздела кошелька</h4>
+                        <img src="media/instructions-redotpay/photos/photo2.jpg" alt="Шаг 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder" style="display: none; padding: 2rem; background: rgba(26, 31, 58, 0.4); border-radius: 12px; text-align: center; color: var(--text-secondary);">
+                            Фото 2: Загрузите photo2.jpg в папку media/instructions-redotpay/photos/
+                        </div>
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 3: Выбор криптовалюты и сети</h4>
+                        <img src="media/instructions-redotpay/photos/photo3.jpg" alt="Шаг 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder" style="display: none; padding: 2rem; background: rgba(26, 31, 58, 0.4); border-radius: 12px; text-align: center; color: var(--text-secondary);">
+                            Фото 3: Загрузите photo3.jpg в папку media/instructions-redotpay/photos/
+                        </div>
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 4: Копирование BEP-20 адреса</h4>
+                        <img src="media/instructions-redotpay/photos/photo4.jpg" alt="Шаг 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="placeholder" style="display: none; padding: 2rem; background: rgba(26, 31, 58, 0.4); border-radius: 12px; text-align: center; color: var(--text-secondary);">
+                            Фото 4: Загрузите photo4.jpg в папку media/instructions-redotpay/photos/
+                        </div>
+                    </div>
                 </div>
 
-                <div class="media-upload">
-                    <label for="video-upload" class="upload-label">🎥 Загрузить видео</label>
-                    <input type="file" id="video-upload" accept="video/*" multiple>
+                <div class="video-block">
+                    <h4>Видео инструкция</h4>
+                    <video controls>
+                        <source src="media/instructions-redotpay/videos/video1.mp4" type="video/mp4">
+                        <source src="media/instructions-redotpay/videos/video1.webm" type="video/webm">
+                        <div class="placeholder" style="padding: 2rem; background: rgba(26, 31, 58, 0.4); border-radius: 12px; text-align: center; color: var(--text-secondary);">
+                            Видео: Загрузите video1.mp4 в папку media/instructions-redotpay/videos/
+                        </div>
+                    </video>
                 </div>
-
-                <div class="media-preview" id="mediaPreview"></div>
             </div>
         </div>
     </div>
 
-    <script>
-        const photoUpload = document.getElementById('photo-upload');
-        const videoUpload = document.getElementById('video-upload');
-        const mediaPreview = document.getElementById('mediaPreview');
-
-        function handleFileUpload(files, isVideo = false) {
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const mediaItem = document.createElement('div');
-                    mediaItem.className = 'media-item';
-                    
-                    if (isVideo) {
-                        const video = document.createElement('video');
-                        video.src = e.target.result;
-                        video.controls = true;
-                        mediaItem.appendChild(video);
-                    } else {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        mediaItem.appendChild(img);
-                    }
-                    
-                    const removeBtn = document.createElement('button');
-                    removeBtn.className = 'remove-btn';
-                    removeBtn.textContent = '×';
-                    removeBtn.onclick = () => mediaItem.remove();
-                    mediaItem.appendChild(removeBtn);
-                    
-                    mediaPreview.appendChild(mediaItem);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        photoUpload.addEventListener('change', (e) => {
-            handleFileUpload(e.target.files, false);
-        });
-
-        videoUpload.addEventListener('change', (e) => {
-            handleFileUpload(e.target.files, true);
-        });
-    </script>
 </body>
 </html>

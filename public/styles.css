@@ -365,6 +365,38 @@ section h2::after {
     margin-bottom: 2rem;
 }
 
+.checkbox-group {
+    margin-bottom: 2rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    gap: 0.75rem;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.checkbox-text {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    user-select: none;
+}
+
+.required {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 0.75rem;

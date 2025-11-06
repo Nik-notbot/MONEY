@@ -1,11 +1,10 @@
 // Список доступных сервисов
 const services = [
-    { id: 'Wise', name: 'Wise', description: 'Международные переводы' },
-    { id: 'ByBit', name: 'ByBit', description: 'Криптовалютная биржа' },
-    { id: 'RedotPay', name: 'RedotPay', description: 'Платежная система' },
-    { id: 'Grey', name: 'Grey', description: 'Финансовый сервис' },
-    { id: 'Payoneer', name: 'Payoneer', description: 'Глобальные платежи' },
-    { id: 'Revolut', name: 'Revolut', description: 'Банковское приложение' }
+    { id: 'Wise', name: 'Wise', description: 'Международные переводы', fieldType: 'IBAN' },
+    { id: 'ByBit', name: 'ByBit', description: 'Криптовалютная биржа', fieldType: 'BEP-20' },
+    { id: 'RedotPay', name: 'RedotPay', description: 'Платежная система', fieldType: 'BEP-20' },
+    { id: 'Grey', name: 'Grey', description: 'Финансовый сервис', fieldType: 'BEP-20' },
+    { id: 'Revolut', name: 'Revolut', description: 'Банковское приложение', fieldType: 'IBAN' }
 ];
 
 // Инициализация приложения
@@ -59,6 +58,49 @@ function selectService(serviceId) {
             item.classList.add('selected');
         }
     });
+    
+    // Показываем/скрываем поля в калькуляторе
+    updateCalculatorFields(serviceId);
+}
+
+// Обновление полей калькулятора в зависимости от выбранного сервиса
+function updateCalculatorFields(serviceId) {
+    const emailGroup = document.getElementById('emailGroup');
+    const ibanGroup = document.getElementById('ibanGroup');
+    const bep20Group = document.getElementById('bep20Group');
+    const termsGroup = document.getElementById('termsGroup');
+    
+    // Скрываем все поля
+    emailGroup.style.display = 'none';
+    ibanGroup.style.display = 'none';
+    bep20Group.style.display = 'none';
+    termsGroup.style.display = 'none';
+    
+    // Очищаем поля
+    document.getElementById('emailInput').value = '';
+    document.getElementById('ibanInput').value = '';
+    document.getElementById('bep20Input').value = '';
+    document.getElementById('termsCheckbox').checked = false;
+    
+    if (!serviceId) {
+        return;
+    }
+    
+    const service = services.find(s => s.id === serviceId);
+    if (!service) {
+        return;
+    }
+    
+    // Показываем обязательные поля для всех сервисов
+    emailGroup.style.display = 'block';
+    termsGroup.style.display = 'block';
+    
+    // Показываем специфичные поля в зависимости от типа
+    if (service.fieldType === 'IBAN') {
+        ibanGroup.style.display = 'block';
+    } else if (service.fieldType === 'BEP-20') {
+        bep20Group.style.display = 'block';
+    }
 }
 
 // Инициализация калькулятора
@@ -80,6 +122,10 @@ function initializeCalculator() {
 async function handleCalculate() {
     const service = document.getElementById('servicesDropdown').value;
     const amount = parseFloat(document.getElementById('amountInput').value);
+    const email = document.getElementById('emailInput').value.trim();
+    const iban = document.getElementById('ibanInput').value.trim();
+    const bep20 = document.getElementById('bep20Input').value.trim();
+    const termsAccepted = document.getElementById('termsCheckbox').checked;
 
     // Валидация
     if (!service) {
@@ -89,6 +135,37 @@ async function handleCalculate() {
 
     if (!amount || amount <= 0) {
         showError('Пожалуйста, введите корректную сумму');
+        return;
+    }
+
+    // Валидация email
+    if (!email) {
+        showError('Пожалуйста, введите email');
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showError('Пожалуйста, введите корректный email');
+        return;
+    }
+
+    // Валидация специфичных полей
+    const serviceData = services.find(s => s.id === service);
+    if (serviceData) {
+        if (serviceData.fieldType === 'IBAN' && !iban) {
+            showError('Пожалуйста, введите IBAN');
+            return;
+        }
+        if (serviceData.fieldType === 'BEP-20' && !bep20) {
+            showError('Пожалуйста, введите BEP-20 адрес');
+            return;
+        }
+    }
+
+    // Валидация согласия с условиями
+    if (!termsAccepted) {
+        showError('Необходимо согласиться с условиями пользования');
         return;
     }
 

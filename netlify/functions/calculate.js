@@ -74,12 +74,6 @@ exports.handler = async (event, context) => {
         minCommission: 130,
         description: 'Комиссия Grey: 2.2% + 40₽ (минимум 130₽)'
       },
-      'Payoneer': {
-        commissionPercent: 1.7,
-        fixedFee: 60,
-        minCommission: 110,
-        description: 'Комиссия Payoneer: 1.7% + 60₽ (минимум 110₽)'
-      },
       'Revolut': {
         commissionPercent: 1.6,
         fixedFee: 45,

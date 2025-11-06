@@ -19,11 +19,20 @@
                     <h2>Доступные сервисы</h2>
                     <div class="services-dropdown-container">
                         <label for="servicesDropdown">Выберите сервис для просмотра информации:</label>
-                        <div class="services-dropdown-wrapper">
-                            <select id="servicesDropdown" class="services-dropdown">
-                                <option value="">-- Выберите сервис --</option>
-                            </select>
+                        <div class="custom-dropdown">
+                            <div class="custom-dropdown-selected" id="customDropdownSelected">
+                                <span class="selected-text">-- Выберите сервис --</span>
+                                <svg class="dropdown-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none">
+                                    <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="custom-dropdown-options" id="customDropdownOptions">
+                                <!-- Опции будут добавлены через JS -->
+                            </div>
                         </div>
+                        <select id="servicesDropdown" style="display: none;">
+                            <option value="">-- Выберите сервис --</option>
+                        </select>
                         <div id="serviceInfo" class="service-info" style="display: none;">
                             <div class="service-info-content">
                                 <h3 id="serviceInfoName"></h3>

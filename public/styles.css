@@ -186,104 +186,167 @@ section h2::after {
     letter-spacing: 0.3px;
 }
 
-.services-dropdown-wrapper {
+.custom-dropdown {
     position: relative;
     width: 100%;
+    z-index: 10;
 }
 
-.services-dropdown-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
-    border-radius: 16px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.services-dropdown-wrapper:hover::before {
-    opacity: 1;
-}
-
-.services-dropdown-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 1.25rem;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 10px solid var(--primary-color);
-    pointer-events: none;
-    transition: all 0.3s ease;
-    z-index: 1;
-    filter: drop-shadow(0 2px 4px rgba(255, 107, 107, 0.3));
-}
-
-.services-dropdown-wrapper:focus-within::after {
-    transform: translateY(-50%) rotate(180deg);
-    border-top-color: var(--secondary-color);
-}
-
-.services-dropdown {
-    width: 100%;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+.custom-dropdown-selected {
     background: rgba(26, 31, 58, 0.6);
     border: 2px solid var(--border-color);
     border-radius: 16px;
-    padding: 1rem 3rem 1rem 1.25rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-primary);
+    padding: 1rem 1.25rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: relative;
-    z-index: 0;
+    z-index: 2;
 }
 
-.services-dropdown:hover {
+.custom-dropdown-selected:hover {
     border-color: rgba(255, 107, 107, 0.6);
     background: rgba(26, 31, 58, 0.8);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md), 0 0 20px rgba(255, 107, 107, 0.1);
 }
 
-.services-dropdown:focus {
-    outline: none;
+.custom-dropdown.open .custom-dropdown-selected {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15), var(--shadow-md), 0 0 30px rgba(255, 107, 107, 0.2);
     background: rgba(26, 31, 58, 0.9);
+    border-radius: 16px 16px 0 0;
 }
 
-.services-dropdown:active {
-    transform: translateY(0);
-}
-
-.services-dropdown option {
-    background: var(--card-bg);
-    color: var(--text-primary);
-    padding: 1rem;
-    font-size: 1rem;
+.selected-text {
+    font-size: 1.1rem;
     font-weight: 500;
-}
-
-.services-dropdown option:hover {
-    background: rgba(255, 107, 107, 0.2);
-}
-
-.services-dropdown option:checked {
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.3) 0%, rgba(78, 205, 196, 0.3) 100%);
     color: var(--text-primary);
+    flex: 1;
+}
+
+.dropdown-arrow {
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.custom-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+    color: var(--secondary-color);
+}
+
+.custom-dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 2px solid var(--primary-color);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 107, 107, 0.2);
+    z-index: 1;
+}
+
+.custom-dropdown.open .custom-dropdown-options {
+    max-height: 400px;
+    opacity: 1;
+    transform: translateY(0);
+    overflow-y: auto;
+}
+
+.custom-dropdown-options::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-dropdown-options::-webkit-scrollbar-track {
+    background: rgba(26, 31, 58, 0.3);
+    border-radius: 4px;
+}
+
+.custom-dropdown-options::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 4px;
+}
+
+.custom-dropdown-options::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-color) 100%);
+}
+
+.custom-dropdown-option {
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-dropdown-option:last-child {
+    border-bottom: none;
+}
+
+.custom-dropdown-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.custom-dropdown-option:hover::before {
+    left: 100%;
+}
+
+.custom-dropdown-option:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.15) 100%);
+    padding-left: 2rem;
+    transform: translateX(4px);
+}
+
+.custom-dropdown-option.selected {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(78, 205, 196, 0.2) 100%);
+    border-left: 3px solid var(--primary-color);
+}
+
+.option-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.custom-dropdown-option.selected .option-name {
+    -webkit-text-fill-color: var(--text-primary);
+    background: none;
+    color: var(--text-primary);
+}
+
+.option-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 400;
 }
 
 .service-info {

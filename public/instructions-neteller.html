@@ -141,7 +141,35 @@
 
             <div class="media-section">
                 <h3>Визуальная инструкция</h3>
-                <p>Фотографии и видео инструкции будут добавлены в ближайшее время.</p>
+                
+                <div class="media-grid">
+                    <div class="media-block">
+                        <h4>Шаг 1: Вход в аккаунт</h4>
+                        <img src="media/instructions-neteller/photos/1.jpg" alt="Шаг 1: Вход в аккаунт">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 2: Получение IBAN</h4>
+                        <img src="media/instructions-neteller/photos/2.png" alt="Шаг 2: Получение IBAN">
+                    </div>
+                </div>
+
+                <div class="video-block">
+                    <h4>Видео инструкция</h4>
+                    <video 
+                        controls 
+                        preload="metadata" 
+                        width="100%"
+                        style="max-width: 100%; height: auto; min-height: 300px;"
+                        poster=""
+                        onerror="console.error('Video error:', this.error); this.style.border='2px solid red';">
+                        <source src="media/instructions-neteller/videos/instruction.mp4" type="video/mp4">
+                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            Ваш браузер не поддерживает воспроизведение видео. 
+                            <a href="media/instructions-neteller/videos/instruction.mp4" download style="color: var(--primary-color);">Скачайте видео</a>
+                        </p>
+                    </video>
+                </div>
             </div>
         </div>
     </div>

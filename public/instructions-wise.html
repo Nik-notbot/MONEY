@@ -57,6 +57,34 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        .media-section {
+            margin: 2rem 0;
+        }
+        .video-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .video-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .video-block video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .video-block video:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +109,26 @@
             </ol>
             <p><strong>Важно:</strong> Убедитесь, что копируете полный IBAN без пробелов. IBAN обычно состоит из 15-34 символов.</p>
 
+            <div class="media-section">
+                <h3>Визуальная инструкция</h3>
+                
+                <div class="video-block">
+                    <h4>Видео инструкция</h4>
+                    <video 
+                        controls 
+                        preload="metadata" 
+                        width="100%"
+                        style="max-width: 100%; height: auto; min-height: 300px;"
+                        poster=""
+                        onerror="console.error('Video error:', this.error); this.style.border='2px solid red';">
+                        <source src="media/instructions-wise/videos/instruction.mp4" type="video/mp4">
+                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            Ваш браузер не поддерживает воспроизведение видео. 
+                            <a href="media/instructions-wise/videos/instruction.mp4" download style="color: var(--primary-color);">Скачайте видео</a>
+                        </p>
+                    </video>
+                </div>
+            </div>
         </div>
     </div>
 

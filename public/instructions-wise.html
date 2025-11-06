@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструкция по получению IBAN для Wise - HeyMoney</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .document-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .document-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .document-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem;
+            line-height: 1.8;
+        }
+        .document-content h2 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .document-content h3 {
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+        .document-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        .document-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            color: var(--text-secondary);
+        }
+        .document-content li {
+            margin-bottom: 0.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .media-section {
+            margin: 2rem 0;
+        }
+        .media-upload {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+        .media-upload:hover {
+            border-color: var(--primary-color);
+            background: rgba(26, 31, 58, 0.6);
+        }
+        .media-upload input[type="file"] {
+            display: none;
+        }
+        .upload-label {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .upload-label:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .media-preview {
+            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .media-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(26, 31, 58, 0.4);
+        }
+        .media-item img, .media-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .media-item .remove-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .media-item .remove-btn:hover {
+            background: var(--error-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <a href="index.html" class="back-link">← Вернуться на главную</a>
+        
+        <div class="document-header">
+            <h1>Инструкция по получению IBAN для Wise</h1>
+            <p class="subtitle">Пошаговое руководство</p>
+        </div>
+
+        <div class="document-content">
+            <h2>Как получить IBAN в Wise</h2>
+            <ol>
+                <li>Войдите в свой аккаунт Wise или зарегистрируйтесь на сайте wise.com</li>
+                <li>Перейдите в раздел "Balances" (Балансы)</li>
+                <li>Выберите валюту, для которой нужен IBAN (например, EUR, USD, GBP)</li>
+                <li>Нажмите на выбранную валюту</li>
+                <li>В разделе "Account details" (Детали счета) вы найдете IBAN</li>
+                <li>Скопируйте IBAN - это длинная строка, начинающаяся с двух букв (например, GB, DE, BE)</li>
+                <li>Вставьте скопированный IBAN в поле на нашем сайте</li>
+            </ol>
+            <p><strong>Важно:</strong> Убедитесь, что копируете полный IBAN без пробелов. IBAN обычно состоит из 15-34 символов.</p>
+
+            <div class="media-section">
+                <h3>Фотографии и видео инструкции</h3>
+                <p>Вы можете загрузить скриншоты или видео для более подробной инструкции:</p>
+                
+                <div class="media-upload">
+                    <label for="photo-upload" class="upload-label">📷 Загрузить фото</label>
+                    <input type="file" id="photo-upload" accept="image/*" multiple>
+                </div>
+
+                <div class="media-upload">
+                    <label for="video-upload" class="upload-label">🎥 Загрузить видео</label>
+                    <input type="file" id="video-upload" accept="video/*" multiple>
+                </div>
+
+                <div class="media-preview" id="mediaPreview"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const photoUpload = document.getElementById('photo-upload');
+        const videoUpload = document.getElementById('video-upload');
+        const mediaPreview = document.getElementById('mediaPreview');
+
+        function handleFileUpload(files, isVideo = false) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const mediaItem = document.createElement('div');
+                    mediaItem.className = 'media-item';
+                    
+                    if (isVideo) {
+                        const video = document.createElement('video');
+                        video.src = e.target.result;
+                        video.controls = true;
+                        mediaItem.appendChild(video);
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        mediaItem.appendChild(img);
+                    }
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.textContent = '×';
+                    removeBtn.onclick = () => mediaItem.remove();
+                    mediaItem.appendChild(removeBtn);
+                    
+                    mediaPreview.appendChild(mediaItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        photoUpload.addEventListener('change', (e) => {
+            handleFileUpload(e.target.files, false);
+        });
+
+        videoUpload.addEventListener('change', (e) => {
+            handleFileUpload(e.target.files, true);
+        });
+    </script>
+</body>
+</html>

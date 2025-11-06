@@ -103,11 +103,30 @@ function updateCalculatorFields(serviceId) {
     emailGroup.style.display = 'block';
     termsGroup.style.display = 'block';
     
+    // Маппинг сервисов на страницы инструкций
+    const instructionPages = {
+        'Wise': 'instructions-wise.html',
+        'ByBit': 'instructions-bybit.html',
+        'RedotPay': 'instructions-redotpay.html',
+        'Grey': 'instructions-grey.html',
+        'Revolut': 'instructions-revolut.html'
+    };
+    
     // Показываем специфичные поля в зависимости от типа
     if (service.fieldType === 'IBAN') {
         ibanGroup.style.display = 'block';
+        // Обновляем ссылку на инструкцию
+        const ibanLink = ibanGroup.querySelector('.instruction-link');
+        if (ibanLink && instructionPages[serviceId]) {
+            ibanLink.href = instructionPages[serviceId];
+        }
     } else if (service.fieldType === 'BEP-20') {
         bep20Group.style.display = 'block';
+        // Обновляем ссылку на инструкцию
+        const bep20Link = bep20Group.querySelector('.instruction-link');
+        if (bep20Link && instructionPages[serviceId]) {
+            bep20Link.href = instructionPages[serviceId];
+        }
     }
 }
 

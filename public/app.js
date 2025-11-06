@@ -16,48 +16,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Инициализация списка сервисов
 function initializeServices() {
-    const servicesGrid = document.getElementById('servicesGrid');
+    const servicesDropdown = document.getElementById('servicesDropdown');
     const serviceSelect = document.getElementById('serviceSelect');
 
     services.forEach(service => {
-        // Добавляем карточку сервиса
-        const serviceCard = document.createElement('div');
-        serviceCard.className = 'service-card';
-        serviceCard.dataset.serviceId = service.id;
-        serviceCard.innerHTML = `
-            <h3>${service.name}</h3>
-            <p>${service.description}</p>
-        `;
-        serviceCard.addEventListener('click', () => {
-            selectService(service.id);
-        });
-        servicesGrid.appendChild(serviceCard);
+        // Добавляем опцию в выпадающий список сервисов
+        const dropdownOption = document.createElement('option');
+        dropdownOption.value = service.id;
+        dropdownOption.textContent = service.name;
+        servicesDropdown.appendChild(dropdownOption);
 
-        // Добавляем опцию в select
-        const option = document.createElement('option');
-        option.value = service.id;
-        option.textContent = service.name;
-        serviceSelect.appendChild(option);
+        // Добавляем опцию в select калькулятора
+        const calcOption = document.createElement('option');
+        calcOption.value = service.id;
+        calcOption.textContent = service.name;
+        serviceSelect.appendChild(calcOption);
     });
 
-    // Обработчик изменения select
+    // Обработчик изменения выпадающего списка сервисов
+    servicesDropdown.addEventListener('change', (e) => {
+        const serviceId = e.target.value;
+        showServiceInfo(serviceId);
+        // Синхронизируем с select калькулятора
+        serviceSelect.value = serviceId;
+    });
+
+    // Обработчик изменения select калькулятора
     serviceSelect.addEventListener('change', (e) => {
-        selectService(e.target.value);
+        const serviceId = e.target.value;
+        // Синхронизируем с выпадающим списком сервисов
+        servicesDropdown.value = serviceId;
+        showServiceInfo(serviceId);
     });
 }
 
-// Выбор сервиса
-function selectService(serviceId) {
-    // Обновляем визуальное выделение
-    document.querySelectorAll('.service-card').forEach(card => {
-        card.classList.remove('selected');
-        if (card.dataset.serviceId === serviceId) {
-            card.classList.add('selected');
-        }
-    });
+// Показать информацию о сервисе
+function showServiceInfo(serviceId) {
+    const serviceInfo = document.getElementById('serviceInfo');
+    const serviceInfoName = document.getElementById('serviceInfoName');
+    const serviceInfoDescription = document.getElementById('serviceInfoDescription');
 
-    // Обновляем select
-    document.getElementById('serviceSelect').value = serviceId;
+    if (!serviceId) {
+        serviceInfo.style.display = 'none';
+        return;
+    }
+
+    const service = services.find(s => s.id === serviceId);
+    if (service) {
+        serviceInfoName.textContent = service.name;
+        serviceInfoDescription.textContent = service.description;
+        serviceInfo.style.display = 'block';
+    } else {
+        serviceInfo.style.display = 'none';
+    }
 }
 
 // Инициализация калькулятора

@@ -108,9 +108,14 @@ header h1::after {
 }
 
 main {
-    display: grid;
-    gap: 3rem;
     margin-bottom: 4rem;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
 }
 
 section {
@@ -168,75 +173,51 @@ section h2::after {
     border-radius: 2px;
 }
 
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
+.services-dropdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.service-card {
+.services-dropdown {
+    width: 100%;
+}
+
+.service-info {
+    margin-top: 1rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.service-info-content {
     background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
     border: 2px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 2rem 1.5rem;
-    border-radius: 20px;
-    text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    border-radius: 16px;
+    padding: 1.5rem;
     backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
 }
 
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.service-card:hover::before {
-    opacity: 1;
-}
-
-.service-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 107, 107, 0.2);
+.service-info-content:hover {
     border-color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.15) 100%);
+    box-shadow: var(--shadow-md);
 }
 
-.service-card.selected {
-    border-color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(78, 205, 196, 0.2) 100%);
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(255, 107, 107, 0.3);
-    transform: translateY(-4px);
-}
-
-.service-card h3 {
-    font-size: 1.75rem;
+.service-info-content h3 {
+    font-size: 1.5rem;
     margin-bottom: 0.75rem;
     font-weight: 700;
     letter-spacing: -0.01em;
-    position: relative;
-    z-index: 1;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.service-card p {
-    font-size: 0.95rem;
+.service-info-content p {
+    font-size: 1rem;
     color: var(--text-secondary);
-    position: relative;
-    z-index: 1;
-    font-weight: 400;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .calculator-card {
@@ -506,6 +487,13 @@ footer {
     letter-spacing: 0.5px;
 }
 
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 2rem 1rem;
@@ -528,19 +516,6 @@ footer {
         font-size: 1.5rem;
     }
 
-    .services-grid {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .service-card {
-        padding: 1.5rem 1rem;
-    }
-
-    .service-card h3 {
-        font-size: 1.5rem;
-    }
-
     .form-control {
         font-size: 1rem;
         padding: 0.875rem 1rem;
@@ -557,5 +532,13 @@ footer {
 
     .result-item.total .result-value {
         font-size: 1.75rem;
+    }
+
+    .service-info-content {
+        padding: 1.25rem;
+    }
+
+    .service-info-content h3 {
+        font-size: 1.25rem;
     }
 }

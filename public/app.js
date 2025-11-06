@@ -207,17 +207,27 @@ async function handleCalculate() {
 
 // Показать результат
 function showResult(data) {
-    const totalAmountDisplay = document.getElementById('totalAmountDisplay');
-    const totalAmountValue = document.getElementById('totalAmountValue');
+    const amountFields = document.getElementById('amountFields');
+    const giveInput = document.getElementById('giveInput');
+    const receiveInput = document.getElementById('receiveInput');
     
-    totalAmountValue.textContent = formatCurrency(data.totalAmount) + ' ₽';
-    totalAmountDisplay.style.display = 'flex';
+    // Отдаю = итоговая сумма к оплате
+    giveInput.value = data.totalAmount.toFixed(2);
+    // Получаю = сумма пополнения
+    receiveInput.value = data.amount.toFixed(2);
+    
+    amountFields.style.display = 'block';
 }
 
 // Скрыть результат
 function hideResult() {
-    const totalAmountDisplay = document.getElementById('totalAmountDisplay');
-    totalAmountDisplay.style.display = 'none';
+    const amountFields = document.getElementById('amountFields');
+    const giveInput = document.getElementById('giveInput');
+    const receiveInput = document.getElementById('receiveInput');
+    
+    amountFields.style.display = 'none';
+    giveInput.value = '';
+    receiveInput.value = '';
 }
 
 // Показать ошибку

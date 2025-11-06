@@ -406,38 +406,41 @@ section h2::after {
     letter-spacing: 0.3px;
 }
 
-.amount-input-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.total-amount-display {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.15) 100%);
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
+.amount-fields {
     animation: fadeIn 0.3s ease-in;
 }
 
-.total-label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-secondary);
+.amount-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
 
-.total-value {
-    font-size: 1.25rem;
+.amount-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.amount-field label {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.amount-field-input {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
+    border: 2px solid var(--primary-color);
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.01em;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    cursor: default;
+}
+
+.amount-field-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15), var(--shadow-md);
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.15) 100%);
 }
 
 .form-control {

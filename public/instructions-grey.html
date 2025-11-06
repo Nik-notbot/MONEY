@@ -104,9 +104,15 @@
         }
         .video-block video {
             width: 100%;
+            max-width: 100%;
             height: auto;
             border-radius: 12px;
             display: block;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .video-block video:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
     </style>
 </head>
@@ -159,9 +165,18 @@
 
                 <div class="video-block">
                     <h4>Видео инструкция</h4>
-                    <video controls>
+                    <video 
+                        controls 
+                        preload="metadata" 
+                        width="100%"
+                        style="max-width: 100%; height: auto; min-height: 300px;"
+                        poster=""
+                        onerror="console.error('Video error:', this.error); this.style.border='2px solid red';">
                         <source src="media/instructions-grey/videos/instruction.mp4" type="video/mp4">
-                        Ваш браузер не поддерживает воспроизведение видео.
+                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            Ваш браузер не поддерживает воспроизведение видео. 
+                            <a href="media/instructions-grey/videos/instruction.mp4" download style="color: var(--primary-color);">Скачайте видео</a>
+                        </p>
                     </video>
                 </div>
             </div>

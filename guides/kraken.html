@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Инструкция: Kraken — heymoney</title>
+	<meta name="theme-color" content="#00d19a">
+	<style>
+		:root { --bg:#070a10; --panel:rgba(12,18,28,0.65); --border:rgba(0,209,154,0.28); --text:#ecf3ff; --muted:#a4b4c8; --brand:#00d19a; --brand-2:#3fa6ff; }
+		* { box-sizing: border-box; }
+		body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 18px; line-height: 1.6; }
+		.container { max-width: 800px; margin: 0 auto; padding: 20px; }
+		.header { padding: 14px 0; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+		.wordmark { font-weight: 900; letter-spacing: .5px; font-size: 28px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+		.back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--brand); text-decoration: none; margin-bottom: 20px; }
+		.content { background: var(--panel); border: 1px solid var(--border); border-radius: 22px; padding: 32px; }
+		h1 { margin: 0 0 20px; font-size: 32px; }
+		h2 { margin: 24px 0 12px; font-size: 24px; color: var(--brand); }
+		p, li { color: var(--muted); margin: 12px 0; }
+		.step { background: rgba(0,209,154,0.06); border-left: 3px solid var(--brand); padding: 16px; margin: 16px 0; border-radius: 8px; }
+		.code { background: rgba(11,18,38,0.7); padding: 12px; border-radius: 8px; font-family: monospace; color: var(--text); border: 1px solid var(--border); }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<a href="/" class="back-link">← Назад</a>
+			<div class="wordmark">heymoney</div>
+		</div>
+		<div class="content">
+			<h1>Как получить адрес кошелька для Kraken</h1>
+			<p>Kraken — одна из крупнейших криптовалютных бирж.</p>
+			
+			<h2>Шаг 1: Регистрация в Kraken</h2>
+			<div class="step">
+				<ol>
+					<li>Перейдите на kraken.com</li>
+					<li>Нажмите "Создать аккаунт"</li>
+					<li>Укажите email, пароль и подтвердите регистрацию</li>
+				</ol>
+			</div>
+
+			<h2>Шаг 2: Верификация</h2>
+			<div class="step">
+				<p>Пройдите верификацию аккаунта (требуется для пополнения).</p>
+			</div>
+
+			<h2>Шаг 3: Получение адреса депозита</h2>
+			<div class="step">
+				<ol>
+					<li>Войдите в аккаунт Kraken</li>
+					<li>Перейдите в "Funding" → "Deposit"</li>
+					<li>Выберите USDT и сеть BEP-20</li>
+					<li>Скопируйте адрес депозита</li>
+				</ol>
+				<p class="code">Пример адреса: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb</p>
+			</div>
+
+			<h2>Важно</h2>
+			<ul>
+				<li>Используйте только сеть BEP-20</li>
+				<li>Проверьте адрес перед отправкой</li>
+				<li>Аккаунт должен быть верифицирован</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

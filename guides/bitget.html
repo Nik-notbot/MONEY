@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Инструкция по Bitget — heymoney</title>
+	<meta name="theme-color" content="#00d19a">
+	<style>
+		:root { --bg:#070a10; --panel:rgba(12,18,28,0.65); --panel-2:rgba(10,16,26,0.55); --border:rgba(0,209,154,0.28); --text:#ecf3ff; --muted:#a4b4c8; --brand:#00d19a; --brand-2:#3fa6ff; }
+		* { box-sizing: border-box; }
+		body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin: 0; background: var(--bg); color: var(--text); position: relative; min-height: 100vh; font-size: 18px; }
+		body::before, body::after { content:""; position: fixed; inset: -20%; z-index: -1; filter: blur(60px) saturate(120%); opacity: .65; }
+		body::before { background: radial-gradient(40% 30% at 10% 10%, rgba(124,168,255,.45), transparent 60%), radial-gradient(35% 30% at 90% 20%, rgba(169,124,255,.35), transparent 60%), radial-gradient(45% 35% at 50% 80%, rgba(75,255,223,.18), transparent 60%); animation: float1 18s ease-in-out infinite alternate; }
+		body::after { background: radial-gradient(30% 25% at 20% 80%, rgba(255,154,118,.18), transparent 60%), radial-gradient(30% 25% at 80% 70%, rgba(118,154,255,.22), transparent 60%); mix-blend-mode: screen; animation: float2 22s ease-in-out infinite alternate; }
+		@keyframes float1 { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(2%, -2%, 0) scale(1.05); } }
+		@keyframes float2 { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-2%, 2%, 0) scale(1.04); } }
+		.container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+		.header { padding: 14px 0; border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); position: sticky; top: 0; background: rgba(7,10,18,0.45); z-index: 10; }
+		.nav { display: flex; align-items: center; justify-content: space-between; }
+		.logo { font-weight: 900; letter-spacing: .4px; font-size: 18px; }
+		.wordmark { font-weight: 900; letter-spacing: .5px; font-size: 28px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; text-decoration: none; }
+		.content { padding: 40px 0; }
+		.panel { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--border); border-radius: 22px; padding: 32px; box-shadow: 0 50px 120px rgba(0,0,0,.55); backdrop-filter: blur(20px) saturate(170%); }
+		h1 { margin: 0 0 24px; font-size: 36px; line-height: 1.2; }
+		h2 { margin: 32px 0 16px; font-size: 24px; font-weight: 800; }
+		p, li { color: var(--muted); line-height: 1.7; }
+		ol, ul { padding-left: 24px; }
+		li { margin: 8px 0; }
+		.code-block { background: rgba(11,18,38,0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 16px 0; font-family: 'Courier New', monospace; font-size: 14px; overflow-x: auto; }
+		.back-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--text); margin-bottom: 24px; transition: all 0.2s ease; }
+		.back-link:hover { border-color: var(--brand); transform: translateX(-4px); }
+	</style>
+</head>
+<body>
+	<div class="header">
+		<div class="container nav">
+			<a href="/" class="wordmark">heymoney</a>
+		</div>
+	</div>
+
+	<div class="container content">
+		<a href="/" class="back-link">← Назад к обменнику</a>
+		
+		<div class="panel">
+			<h1>Как получить адрес кошелька для Bitget</h1>
+			
+			<h2>Шаг 1: Регистрация в Bitget</h2>
+			<ol>
+				<li>Перейдите на сайт bitget.com</li>
+				<li>Нажмите "Sign Up" и создайте аккаунт</li>
+				<li>Подтвердите email и номер телефона</li>
+				<li>Пройдите верификацию личности (KYC) для полного доступа</li>
+			</ol>
+
+			<h2>Шаг 2: Получение адреса BEP-20</h2>
+			<ol>
+				<li>Войдите в аккаунт Bitget</li>
+				<li>Перейдите в раздел "Assets" → "Deposit"</li>
+				<li>Выберите криптовалюту USDT</li>
+				<li>Выберите сеть BEP-20 (BSC)</li>
+				<li>Скопируйте адрес депозита (начинается с 0x...)</li>
+			</ol>
+
+			<h2>Шаг 3: Использование адреса</h2>
+			<p>Скопированный адрес BEP-20 используйте в форме обмена на главной странице heymoney. Убедитесь, что:</p>
+			<ul>
+				<li>Вы выбрали сеть BEP-20 (BSC), а не ERC-20 или другие сети</li>
+				<li>Адрес начинается с "0x" и содержит 42 символа</li>
+				<li>Адрес скопирован полностью, без пробелов</li>
+			</ul>
+
+			<h2>Важные замечания</h2>
+			<ul>
+				<li>Используйте только адрес сети BEP-20. Отправка на адреса других сетей приведет к потере средств</li>
+				<li>Bitget поддерживает несколько сетей для USDT, обязательно выберите BEP-20</li>
+				<li>Пополнение обычно происходит в течение 5-30 минут после подтверждения транзакции</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

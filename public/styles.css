@@ -175,135 +175,67 @@ section h2::after {
     border-radius: 2px;
 }
 
-.services-dropdown-container {
+.services-list-container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.services-dropdown-container label {
+.services-list-container label {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: 0.3px;
 }
 
-.custom-dropdown {
-    position: relative;
-    width: 100%;
-    z-index: 100;
-}
-
-.custom-dropdown-selected {
-    background: rgba(26, 31, 58, 0.6);
+.services-list {
+    background: rgba(26, 31, 58, 0.4);
     border: 2px solid var(--border-color);
     border-radius: 16px;
-    padding: 1rem 1.25rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    z-index: 2;
-}
-
-.custom-dropdown-selected:hover {
-    border-color: rgba(255, 107, 107, 0.6);
-    background: rgba(26, 31, 58, 0.8);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 107, 107, 0.1);
-}
-
-.custom-dropdown.open .custom-dropdown-selected {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15), var(--shadow-md), 0 0 30px rgba(255, 107, 107, 0.2);
-    background: rgba(26, 31, 58, 0.9);
-    border-radius: 16px 16px 0 0;
-}
-
-.selected-text {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    flex: 1;
-}
-
-.dropdown-arrow {
-    color: var(--primary-color);
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-    margin-left: 1rem;
-}
-
-.custom-dropdown.open .dropdown-arrow {
-    transform: rotate(180deg);
-    color: var(--secondary-color);
-}
-
-.custom-dropdown-options {
-    position: absolute;
-    top: calc(100% + 2px);
-    left: 0;
-    right: 0;
-    background: var(--card-bg);
-    border: 2px solid var(--primary-color);
-    border-top: none;
-    border-radius: 0 0 16px 16px;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 107, 107, 0.2);
-    z-index: 101;
-    margin-top: 2px;
-}
-
-.custom-dropdown.open .custom-dropdown-options {
     max-height: 400px;
-    opacity: 1;
-    transform: translateY(0);
     overflow-y: auto;
+    padding: 0.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
 }
 
-.custom-dropdown-options::-webkit-scrollbar {
-    width: 8px;
+.services-list:hover {
+    border-color: rgba(255, 107, 107, 0.5);
+    box-shadow: var(--shadow-md);
 }
 
-.custom-dropdown-options::-webkit-scrollbar-track {
+.services-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.services-list::-webkit-scrollbar-track {
     background: rgba(26, 31, 58, 0.3);
-    border-radius: 4px;
+    border-radius: 8px;
+    margin: 0.5rem 0;
 }
 
-.custom-dropdown-options::-webkit-scrollbar-thumb {
+.services-list::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    border-radius: 4px;
+    border-radius: 8px;
+    border: 2px solid rgba(26, 31, 58, 0.3);
 }
 
-.custom-dropdown-options::-webkit-scrollbar-thumb:hover {
+.services-list::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-color) 100%);
 }
 
-.custom-dropdown-option {
+.service-item {
     padding: 1.25rem 1.5rem;
+    margin: 0.5rem 0;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    border: 2px solid transparent;
     position: relative;
     overflow: hidden;
 }
 
-.custom-dropdown-option:last-child {
-    border-bottom: none;
-}
-
-.custom-dropdown-option::before {
+.service-item::before {
     content: '';
     position: absolute;
     top: 0;
@@ -312,25 +244,38 @@ section h2::after {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
     transition: left 0.5s ease;
+    z-index: 0;
 }
 
-.custom-dropdown-option:hover::before {
+.service-item:hover::before {
     left: 100%;
 }
 
-.custom-dropdown-option:hover {
+.service-item:hover {
     background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.15) 100%);
-    padding-left: 2rem;
+    border-color: rgba(255, 107, 107, 0.3);
     transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
 }
 
-.custom-dropdown-option.selected {
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(78, 205, 196, 0.2) 100%);
-    border-left: 3px solid var(--primary-color);
+.service-item.selected {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.25) 0%, rgba(78, 205, 196, 0.25) 100%);
+    border-color: var(--primary-color);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(255, 107, 107, 0.2);
+    transform: translateX(0);
 }
 
-.option-name {
-    font-size: 1.1rem;
+.service-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.service-item-name {
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.01em;
@@ -338,18 +283,20 @@ section h2::after {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transition: all 0.3s ease;
 }
 
-.custom-dropdown-option.selected .option-name {
+.service-item.selected .service-item-name {
     -webkit-text-fill-color: var(--text-primary);
     background: none;
     color: var(--text-primary);
 }
 
-.option-description {
-    font-size: 0.9rem;
+.service-item-description {
+    font-size: 0.95rem;
     color: var(--text-secondary);
     font-weight: 400;
+    line-height: 1.5;
 }
 
 .service-info {

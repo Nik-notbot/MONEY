@@ -17,11 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Инициализация списка сервисов
 function initializeServices() {
     const servicesDropdown = document.getElementById('servicesDropdown');
-    const customDropdownSelected = document.getElementById('customDropdownSelected');
-    const customDropdownOptions = document.getElementById('customDropdownOptions');
-    const selectedText = customDropdownSelected.querySelector('.selected-text');
+    const servicesList = document.getElementById('servicesList');
 
-    // Создаем кастомные опции
+    // Создаем элементы списка сервисов
     services.forEach(service => {
         // Добавляем опцию в скрытый select для совместимости
         const dropdownOption = document.createElement('option');
@@ -29,78 +27,40 @@ function initializeServices() {
         dropdownOption.textContent = service.name;
         servicesDropdown.appendChild(dropdownOption);
 
-        // Создаем кастомную опцию
-        const customOption = document.createElement('div');
-        customOption.className = 'custom-dropdown-option';
-        customOption.dataset.value = service.id;
-        customOption.innerHTML = `
-            <span class="option-name">${service.name}</span>
-            <span class="option-description">${service.description}</span>
+        // Создаем элемент списка
+        const serviceItem = document.createElement('div');
+        serviceItem.className = 'service-item';
+        serviceItem.dataset.value = service.id;
+        serviceItem.innerHTML = `
+            <div class="service-item-content">
+                <span class="service-item-name">${service.name}</span>
+                <span class="service-item-description">${service.description}</span>
+            </div>
         `;
         
-        customOption.addEventListener('click', () => {
-            selectCustomOption(service.id, service.name);
+        serviceItem.addEventListener('click', () => {
+            selectService(service.id);
         });
         
-        customDropdownOptions.appendChild(customOption);
-    });
-
-    // Обработчик клика на выбранный элемент
-    customDropdownSelected.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleCustomDropdown();
-    });
-
-    // Закрытие при клике вне dropdown
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.custom-dropdown')) {
-            closeCustomDropdown();
-        }
+        servicesList.appendChild(serviceItem);
     });
 }
 
-// Выбор опции в кастомном dropdown
-function selectCustomOption(serviceId, serviceName) {
-    const selectedText = document.querySelector('.selected-text');
+// Выбор сервиса
+function selectService(serviceId) {
     const servicesDropdown = document.getElementById('servicesDropdown');
     
-    selectedText.textContent = serviceName;
     servicesDropdown.value = serviceId;
     
-    // Обновляем визуальное состояние опций
-    document.querySelectorAll('.custom-dropdown-option').forEach(option => {
-        option.classList.remove('selected');
-        if (option.dataset.value === serviceId) {
-            option.classList.add('selected');
+    // Обновляем визуальное состояние элементов списка
+    document.querySelectorAll('.service-item').forEach(item => {
+        item.classList.remove('selected');
+        if (item.dataset.value === serviceId) {
+            item.classList.add('selected');
         }
     });
     
-    closeCustomDropdown();
     showServiceInfo(serviceId);
-}
-
-// Переключение dropdown
-function toggleCustomDropdown() {
-    const customDropdown = document.querySelector('.custom-dropdown');
-    const isOpen = customDropdown.classList.contains('open');
-    
-    if (isOpen) {
-        closeCustomDropdown();
-    } else {
-        openCustomDropdown();
-    }
-}
-
-// Открыть dropdown
-function openCustomDropdown() {
-    const customDropdown = document.querySelector('.custom-dropdown');
-    customDropdown.classList.add('open');
-}
-
-// Закрыть dropdown
-function closeCustomDropdown() {
-    const customDropdown = document.querySelector('.custom-dropdown');
-    customDropdown.classList.remove('open');
 }
 
 // Показать информацию о сервисе

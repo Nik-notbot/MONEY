@@ -118,14 +118,14 @@ function updateCalculatorFields(serviceId) {
     if (service.fieldType === 'IBAN') {
         ibanGroup.style.display = 'block';
         // Обновляем ссылку на инструкцию
-        const ibanLink = ibanGroup.querySelector('.instruction-link');
+        const ibanLink = document.getElementById('ibanInstructionLink');
         if (ibanLink && instructionPages[serviceId]) {
             ibanLink.href = instructionPages[serviceId];
         }
     } else if (service.fieldType === 'BEP-20') {
         bep20Group.style.display = 'block';
         // Обновляем ссылку на инструкцию
-        const bep20Link = bep20Group.querySelector('.instruction-link');
+        const bep20Link = document.getElementById('bep20InstructionLink');
         if (bep20Link && instructionPages[serviceId]) {
             bep20Link.href = instructionPages[serviceId];
         }

@@ -207,21 +207,17 @@ async function handleCalculate() {
 
 // Показать результат
 function showResult(data) {
-    const resultContainer = document.getElementById('result');
-    document.getElementById('resultAmount').textContent = formatCurrency(data.amount) + ' ₽';
-    document.getElementById('resultCommission').textContent = formatCurrency(data.commission) + ' ₽';
-    document.getElementById('resultTotal').textContent = formatCurrency(data.totalAmount) + ' ₽';
-    document.getElementById('resultDescription').textContent = data.description;
+    const totalAmountDisplay = document.getElementById('totalAmountDisplay');
+    const totalAmountValue = document.getElementById('totalAmountValue');
     
-    resultContainer.style.display = 'block';
-    
-    // Прокрутка к результату
-    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    totalAmountValue.textContent = formatCurrency(data.totalAmount) + ' ₽';
+    totalAmountDisplay.style.display = 'flex';
 }
 
 // Скрыть результат
 function hideResult() {
-    document.getElementById('result').style.display = 'none';
+    const totalAmountDisplay = document.getElementById('totalAmountDisplay');
+    totalAmountDisplay.style.display = 'none';
 }
 
 // Показать ошибку

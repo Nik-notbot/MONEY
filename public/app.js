@@ -72,6 +72,7 @@ function updateCalculatorFields(serviceId) {
     const termsGroup = document.getElementById('termsGroup');
     const giveInput = document.getElementById('giveInput');
     const receiveInput = document.getElementById('receiveInput');
+    const calculatorSection = document.querySelector('.calculator-section');
     
     // Скрываем все поля
     emailGroup.style.display = 'none';
@@ -92,12 +93,21 @@ function updateCalculatorFields(serviceId) {
     lastCalculatedReceive = '';
     
     if (!serviceId) {
+        // Убираем класс при сбросе выбора
+        if (calculatorSection) {
+            calculatorSection.classList.remove('has-service');
+        }
         return;
     }
     
     const service = services.find(s => s.id === serviceId);
     if (!service) {
         return;
+    }
+    
+    // Добавляем класс для увеличения высоты
+    if (calculatorSection) {
+        calculatorSection.classList.add('has-service');
     }
     
     // Показываем обязательные поля для всех сервисов

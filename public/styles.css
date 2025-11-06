@@ -132,6 +132,30 @@ section {
     flex-direction: column;
 }
 
+.calculator-section {
+    min-height: 200px;
+    transition: min-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calculator-section.has-service {
+    min-height: auto;
+    padding: 3rem;
+}
+
+.calculator-section:not(.has-service) {
+    padding: 2rem 3rem;
+}
+
+.calculator-section:not(.has-service) .calculator-card {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.calculator-section.has-service .calculator-card {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 
 section:hover {
     transform: translateY(-4px);

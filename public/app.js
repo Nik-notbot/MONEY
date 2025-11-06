@@ -69,6 +69,8 @@ function updateCalculatorFields(serviceId) {
     const ibanGroup = document.getElementById('ibanGroup');
     const bep20Group = document.getElementById('bep20Group');
     const termsGroup = document.getElementById('termsGroup');
+    const giveInput = document.getElementById('giveInput');
+    const receiveInput = document.getElementById('receiveInput');
     
     // Скрываем все поля
     emailGroup.style.display = 'none';
@@ -81,6 +83,12 @@ function updateCalculatorFields(serviceId) {
     document.getElementById('ibanInput').value = '';
     document.getElementById('bep20Input').value = '';
     document.getElementById('termsCheckbox').checked = false;
+    
+    // Очищаем поля сумм и сбрасываем флаги
+    giveInput.value = '';
+    receiveInput.value = '';
+    lastCalculatedGive = '';
+    lastCalculatedReceive = '';
     
     if (!serviceId) {
         return;
@@ -103,6 +111,109 @@ function updateCalculatorFields(serviceId) {
     }
 }
 
+// Debounce функция для оптимизации запросов
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Автоматический расчет при вводе
+let isCalculating = false;
+let lastCalculatedGive = '';
+let lastCalculatedReceive = '';
+
+async function autoCalculate(fieldType) {
+    if (isCalculating) return;
+    
+    const service = document.getElementById('servicesDropdown').value;
+    if (!service) return;
+    
+    const giveInput = document.getElementById('giveInput');
+    const receiveInput = document.getElementById('receiveInput');
+    const giveValue = giveInput.value.trim();
+    const receiveValue = receiveInput.value.trim();
+    
+    // Предотвращаем бесконечный цикл
+    if (fieldType === 'give' && giveValue === lastCalculatedGive) return;
+    if (fieldType === 'receive' && receiveValue === lastCalculatedReceive) return;
+    
+    let amount = 0;
+    let isGiveAmount = false;
+    
+    if (fieldType === 'give' && giveValue && parseFloat(giveValue) > 0) {
+        amount = parseFloat(giveValue);
+        isGiveAmount = true;
+    } else if (fieldType === 'receive' && receiveValue && parseFloat(receiveValue) > 0) {
+        amount = parseFloat(receiveValue);
+        isGiveAmount = false;
+    } else {
+        return;
+    }
+    
+    if (!amount || amount <= 0) return;
+    
+    isCalculating = true;
+    
+    try {
+        let calculatedAmount = amount;
+        
+        if (isGiveAmount) {
+            // Если введено "Отдаю", используем упрощенный расчет для скорости
+            // Приблизительная оценка комиссии
+            const estimatedCommissionPercent = 1.8;
+            const estimatedFixedFee = 40;
+            const estimatedMinCommission = 120;
+            
+            // Итеративный расчет для приближения
+            let testAmount = amount * 0.95;
+            for (let i = 0; i < 5; i++) {
+                const testCommission = Math.max(testAmount * estimatedCommissionPercent / 100 + estimatedFixedFee, estimatedMinCommission);
+                const testTotal = testAmount + testCommission;
+                if (Math.abs(testTotal - amount) < 0.1) break;
+                testAmount = amount - testCommission;
+                if (testAmount < 0) testAmount = 0;
+            }
+            calculatedAmount = testAmount;
+        }
+        
+        // Вызываем serverless функцию
+        const response = await fetch('/.netlify/functions/calculate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ amount: calculatedAmount, service })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Обновляем второе поле
+            if (isGiveAmount) {
+                receiveInput.value = data.amount.toFixed(2);
+                lastCalculatedReceive = receiveInput.value;
+            } else {
+                giveInput.value = data.totalAmount.toFixed(2);
+                lastCalculatedGive = giveInput.value;
+            }
+        }
+    } catch (error) {
+        console.error('Auto calculate error:', error);
+    } finally {
+        isCalculating = false;
+    }
+}
+
+// Debounced версия автоматического расчета
+const debouncedAutoCalculate = debounce(autoCalculate, 500);
+
 // Инициализация калькулятора
 function initializeCalculator() {
     const calculateBtn = document.getElementById('calculateBtn');
@@ -111,15 +222,44 @@ function initializeCalculator() {
 
     calculateBtn.addEventListener('click', handleCalculate);
 
+    // Автоматический расчет при вводе
+    giveInput.addEventListener('input', (e) => {
+        const currentValue = e.target.value.trim();
+        // Очищаем второе поле только если значение изменилось вручную (не программно)
+        if (currentValue && currentValue !== lastCalculatedGive) {
+            // Очищаем только если второе поле было заполнено автоматически
+            if (receiveInput.value === lastCalculatedReceive) {
+                receiveInput.value = '';
+                lastCalculatedReceive = '';
+            }
+        }
+        debouncedAutoCalculate('give');
+    });
+
+    receiveInput.addEventListener('input', (e) => {
+        const currentValue = e.target.value.trim();
+        // Очищаем первое поле только если значение изменилось вручную (не программно)
+        if (currentValue && currentValue !== lastCalculatedReceive) {
+            // Очищаем только если первое поле было заполнено автоматически
+            if (giveInput.value === lastCalculatedGive) {
+                giveInput.value = '';
+                lastCalculatedGive = '';
+            }
+        }
+        debouncedAutoCalculate('receive');
+    });
+
     // Расчет при нажатии Enter в любом из полей
     giveInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+            e.preventDefault();
             handleCalculate();
         }
     });
 
     receiveInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+            e.preventDefault();
             handleCalculate();
         }
     });

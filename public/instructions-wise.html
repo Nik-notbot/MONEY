@@ -60,6 +60,35 @@
         .media-section {
             margin: 2rem 0;
         }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .media-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .media-block:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+        .media-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .media-block img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
         .video-block {
             background: rgba(26, 31, 58, 0.4);
             border: 2px solid var(--border-color);
@@ -112,13 +141,30 @@
             <div class="media-section">
                 <h3>Визуальная инструкция</h3>
                 
+                <div class="media-grid">
+                    <div class="media-block">
+                        <h4>Шаг 1: Вход в аккаунт</h4>
+                        <img src="media/instructions-wise/photos/1.jpg" alt="Шаг 1: Вход в аккаунт">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 2: Выбор валюты</h4>
+                        <img src="media/instructions-wise/photos/2.jpg" alt="Шаг 2: Выбор валюты">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 3: Получение IBAN</h4>
+                        <img src="media/instructions-wise/photos/3.jpg" alt="Шаг 3: Получение IBAN">
+                    </div>
+                </div>
+
                 <div class="video-block">
                     <h4>Видео инструкция</h4>
                     <video 
                         controls 
                         preload="metadata" 
                         width="100%"
-                        style="max-width: 100%; height: auto; min-height: 300px;"
+                        style="max-width: 100%; height: auto;"
                         poster=""
                         onerror="console.error('Video error:', this.error); this.style.border='2px solid red';">
                         <source src="media/instructions-wise/videos/instruction.mp4" type="video/mp4">

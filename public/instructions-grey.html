@@ -88,6 +88,57 @@
             height: auto;
             border-radius: 12px;
             display: block;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .media-block img:hover {
+            transform: scale(1.02);
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+        .image-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .image-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 107, 107, 0.8);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .image-modal-close:hover {
+            background: var(--error-color);
+            transform: rotate(90deg);
         }
         .video-block {
             background: rgba(26, 31, 58, 0.4);
@@ -144,23 +195,28 @@
                 <div class="media-grid">
                     <div class="media-block">
                         <h4>Шаг 1: Вход в аккаунт</h4>
-                        <img src="media/instructions-grey/photos/1.jpg" alt="Шаг 1: Вход в аккаунт">
+                        <img src="media/instructions-grey/photos/1.jpg" alt="Шаг 1: Вход в аккаунт" onclick="openImageModal(this.src)">
                     </div>
 
                     <div class="media-block">
                         <h4>Шаг 2: Выбор раздела кошелька</h4>
-                        <img src="media/instructions-grey/photos/2.jpg" alt="Шаг 2: Выбор раздела кошелька">
+                        <img src="media/instructions-grey/photos/2.jpg" alt="Шаг 2: Выбор раздела кошелька" onclick="openImageModal(this.src)">
                     </div>
 
                     <div class="media-block">
                         <h4>Шаг 3: Выбор криптовалюты и сети</h4>
-                        <img src="media/instructions-grey/photos/3.jpg" alt="Шаг 3: Выбор криптовалюты и сети">
+                        <img src="media/instructions-grey/photos/3.jpg" alt="Шаг 3: Выбор криптовалюты и сети" onclick="openImageModal(this.src)">
                     </div>
 
                     <div class="media-block">
                         <h4>Шаг 4: Копирование BEP-20 адреса</h4>
-                        <img src="media/instructions-grey/photos/4.jpg" alt="Шаг 4: Копирование BEP-20 адреса">
+                        <img src="media/instructions-grey/photos/4.jpg" alt="Шаг 4: Копирование BEP-20 адреса" onclick="openImageModal(this.src)">
                     </div>
+                </div>
+
+                <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+                    <span class="image-modal-close" onclick="event.stopPropagation(); closeImageModal();">&times;</span>
+                    <img class="image-modal-content" id="modalImage" src="" alt="Увеличенное изображение" onclick="event.stopPropagation();">
                 </div>
 
                 <div class="video-block">
@@ -183,5 +239,27 @@
         </div>
     </div>
 
+    <script>
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.classList.add('active');
+            modalImg.src = imageSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+    </script>
 </body>
 </html>

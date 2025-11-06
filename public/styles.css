@@ -132,23 +132,6 @@ section {
     flex-direction: column;
 }
 
-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1;
-    border-radius: 24px 24px 0 0;
-}
-
-section:hover::before {
-    opacity: 1;
-}
 
 section:hover {
     transform: translateY(-4px);

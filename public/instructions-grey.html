@@ -57,6 +57,57 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        .media-section {
+            margin: 2rem 0;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .media-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .media-block:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+        .media-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .media-block img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
+        .video-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .video-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .video-block video {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +132,39 @@
             </ol>
             <p><strong>Важно:</strong> Адрес должен начинаться с "0x" и содержать 42 символа. Не используйте адреса других сетей.</p>
 
+            <div class="media-section">
+                <h3>Визуальная инструкция</h3>
+                
+                <div class="media-grid">
+                    <div class="media-block">
+                        <h4>Шаг 1: Вход в аккаунт</h4>
+                        <img src="media/instructions-grey/photos/1.png" alt="Шаг 1: Вход в аккаунт">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 2: Выбор раздела кошелька</h4>
+                        <img src="media/instructions-grey/photos/2.png" alt="Шаг 2: Выбор раздела кошелька">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 3: Выбор криптовалюты и сети</h4>
+                        <img src="media/instructions-grey/photos/3.png" alt="Шаг 3: Выбор криптовалюты и сети">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 4: Копирование BEP-20 адреса</h4>
+                        <img src="media/instructions-grey/photos/4.png" alt="Шаг 4: Копирование BEP-20 адреса">
+                    </div>
+                </div>
+
+                <div class="video-block">
+                    <h4>Видео инструкция</h4>
+                    <video controls>
+                        <source src="media/instructions-grey/videos/instruction.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает воспроизведение видео.
+                    </video>
+                </div>
+            </div>
         </div>
     </div>
 

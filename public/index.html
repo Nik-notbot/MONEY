@@ -31,19 +31,7 @@
                 <section class="calculator-section">
                     <h2>Калькулятор</h2>
                     <div class="calculator-card">
-                        <div class="form-group">
-                            <label for="amountInput">Сумма пополнения (₽):</label>
-                            <input 
-                                type="number" 
-                                id="amountInput" 
-                                class="form-control" 
-                                placeholder="Введите сумму"
-                                min="1"
-                                step="0.01"
-                            >
-                        </div>
-
-                        <div class="form-group amount-fields" id="amountFields" style="display: none;">
+                        <div class="form-group amount-fields">
                             <div class="amount-field-row">
                                 <div class="amount-field">
                                     <label for="giveInput">Отдаю (₽):</label>
@@ -51,8 +39,9 @@
                                         type="number" 
                                         id="giveInput" 
                                         class="form-control amount-field-input" 
-                                        placeholder="0.00"
-                                        readonly
+                                        placeholder="Введите сумму"
+                                        min="0"
+                                        step="0.01"
                                     >
                                 </div>
                                 <div class="amount-field">
@@ -61,8 +50,9 @@
                                         type="number" 
                                         id="receiveInput" 
                                         class="form-control amount-field-input" 
-                                        placeholder="0.00"
-                                        readonly
+                                        placeholder="Введите сумму"
+                                        min="0"
+                                        step="0.01"
                                     >
                                 </div>
                             </div>
@@ -109,7 +99,7 @@
                             </label>
                         </div>
 
-                        <button id="calculateBtn" class="btn btn-primary">Рассчитать</button>
+                        <button id="calculateBtn" class="btn btn-primary">Обменять</button>
 
                         <div id="error" class="error-message" style="display: none;"></div>
 

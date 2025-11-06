@@ -106,12 +106,19 @@ function updateCalculatorFields(serviceId) {
 // Инициализация калькулятора
 function initializeCalculator() {
     const calculateBtn = document.getElementById('calculateBtn');
-    const amountInput = document.getElementById('amountInput');
+    const giveInput = document.getElementById('giveInput');
+    const receiveInput = document.getElementById('receiveInput');
 
     calculateBtn.addEventListener('click', handleCalculate);
 
-    // Расчет при нажатии Enter
-    amountInput.addEventListener('keypress', (e) => {
+    // Расчет при нажатии Enter в любом из полей
+    giveInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleCalculate();
+        }
+    });
+
+    receiveInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             handleCalculate();
         }
@@ -121,7 +128,10 @@ function initializeCalculator() {
 // Обработка расчета
 async function handleCalculate() {
     const service = document.getElementById('servicesDropdown').value;
-    const amount = parseFloat(document.getElementById('amountInput').value);
+    const giveInput = document.getElementById('giveInput');
+    const receiveInput = document.getElementById('receiveInput');
+    const giveAmount = parseFloat(giveInput.value);
+    const receiveAmount = parseFloat(receiveInput.value);
     const email = document.getElementById('emailInput').value.trim();
     const iban = document.getElementById('ibanInput').value.trim();
     const bep20 = document.getElementById('bep20Input').value.trim();
@@ -130,6 +140,28 @@ async function handleCalculate() {
     // Валидация
     if (!service) {
         showError('Пожалуйста, выберите сервис в блоке "Доступные сервисы"');
+        return;
+    }
+
+    // Определяем, какое поле заполнено
+    let amount = 0;
+    let isGiveAmount = false;
+    
+    if (giveAmount > 0 && receiveAmount > 0) {
+        // Если оба поля заполнены, используем "Отдаю" как основную сумму
+        amount = giveAmount;
+        isGiveAmount = true;
+    } else if (giveAmount > 0) {
+        // Если заполнено только "Отдаю", это итоговая сумма к оплате
+        // Нужно рассчитать обратно сумму пополнения
+        isGiveAmount = true;
+        amount = giveAmount;
+    } else if (receiveAmount > 0) {
+        // Если заполнено только "Получаю", это сумма пополнения
+        amount = receiveAmount;
+        isGiveAmount = false;
+    } else {
+        showError('Пожалуйста, введите сумму в одно из полей');
         return;
     }
 
@@ -175,13 +207,66 @@ async function handleCalculate() {
     showLoading();
 
     try {
-        // Вызываем serverless функцию
+        let calculatedAmount = amount;
+        
+        if (isGiveAmount) {
+            // Если заполнено "Отдаю" (итоговая сумма), нужно найти сумму пополнения
+            // Используем бинарный поиск для точного расчета
+            const targetTotal = amount;
+            let low = 0;
+            let high = targetTotal;
+            let bestAmount = 0;
+            let bestDiff = Infinity;
+            
+            // Делаем несколько итераций бинарного поиска
+            for (let iteration = 0; iteration < 15; iteration++) {
+                const testAmount = (low + high) / 2;
+                
+                const response = await fetch('/.netlify/functions/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ amount: testAmount, service })
+                });
+                
+                const testData = await response.json();
+                
+                if (testData.success) {
+                    const diff = Math.abs(testData.totalAmount - targetTotal);
+                    if (diff < bestDiff) {
+                        bestDiff = diff;
+                        bestAmount = testData.amount;
+                    }
+                    
+                    if (diff < 0.01) {
+                        // Нашли точное значение
+                        calculatedAmount = testData.amount;
+                        break;
+                    }
+                    
+                    if (testData.totalAmount < targetTotal) {
+                        low = testAmount;
+                    } else {
+                        high = testAmount;
+                    }
+                } else {
+                    break;
+                }
+            }
+            
+            if (bestDiff < 1) {
+                calculatedAmount = bestAmount;
+            }
+        }
+        
+        // Финальный вызов для получения точных данных
         const response = await fetch('/.netlify/functions/calculate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ amount, service })
+            body: JSON.stringify({ amount: calculatedAmount, service })
         });
 
         const data = await response.json();
@@ -194,7 +279,16 @@ async function handleCalculate() {
         }
 
         if (data.success) {
-            showResult(data);
+            // Заполняем поля в зависимости от того, что было введено
+            if (isGiveAmount) {
+                // Если было введено "Отдаю", заполняем "Получаю"
+                receiveInput.value = data.amount.toFixed(2);
+                giveInput.value = data.totalAmount.toFixed(2);
+            } else {
+                // Если было введено "Получаю", заполняем "Отдаю"
+                giveInput.value = data.totalAmount.toFixed(2);
+                receiveInput.value = data.amount.toFixed(2);
+            }
         } else {
             showError(data.error || 'Неизвестная ошибка');
         }
@@ -205,29 +299,9 @@ async function handleCalculate() {
     }
 }
 
-// Показать результат
-function showResult(data) {
-    const amountFields = document.getElementById('amountFields');
-    const giveInput = document.getElementById('giveInput');
-    const receiveInput = document.getElementById('receiveInput');
-    
-    // Отдаю = итоговая сумма к оплате
-    giveInput.value = data.totalAmount.toFixed(2);
-    // Получаю = сумма пополнения
-    receiveInput.value = data.amount.toFixed(2);
-    
-    amountFields.style.display = 'block';
-}
-
-// Скрыть результат
+// Скрыть результат (очистка полей при изменении сервиса)
 function hideResult() {
-    const amountFields = document.getElementById('amountFields');
-    const giveInput = document.getElementById('giveInput');
-    const receiveInput = document.getElementById('receiveInput');
-    
-    amountFields.style.display = 'none';
-    giveInput.value = '';
-    receiveInput.value = '';
+    // Поля остаются видимыми, но можно очистить при необходимости
 }
 
 // Показать ошибку

@@ -429,18 +429,24 @@ section h2::after {
 }
 
 .amount-field-input {
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
-    border: 2px solid var(--primary-color);
-    font-weight: 700;
-    font-size: 1.1rem;
+    background: rgba(26, 31, 58, 0.6);
+    border: 2px solid var(--border-color);
+    font-weight: 600;
+    font-size: 1rem;
     color: var(--text-primary);
-    cursor: default;
+    cursor: text;
+    transition: all 0.3s ease;
+}
+
+.amount-field-input:hover {
+    border-color: rgba(255, 107, 107, 0.5);
 }
 
 .amount-field-input:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15), var(--shadow-md);
-    background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(78, 205, 196, 0.15) 100%);
+    background: rgba(26, 31, 58, 0.8);
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
 }
 
 .form-control {

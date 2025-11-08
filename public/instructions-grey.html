@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструкция по получению BEP-20 для Grey - HeyMoney</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .document-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .document-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .document-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem;
+            line-height: 1.8;
+        }
+        .document-content h2 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .document-content h3 {
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+        .document-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        .document-content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            color: var(--text-secondary);
+        }
+        .document-content li {
+            margin-bottom: 0.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .media-section {
+            margin: 2rem 0;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .media-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .media-block:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+        .media-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .media-block img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .media-block img:hover {
+            transform: scale(1.02);
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+        .image-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .image-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 107, 107, 0.8);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .image-modal-close:hover {
+            background: var(--error-color);
+            transform: rotate(90deg);
+        }
+        .video-block {
+            background: rgba(26, 31, 58, 0.4);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .video-block h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .video-block video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .video-block video:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <a href="index.html" class="back-link">← Вернуться на главную</a>
+        
+        <div class="document-header">
+            <h1>Инструкция по получению BEP-20 для Grey</h1>
+            <p class="subtitle">Пошаговое руководство</p>
+        </div>
+
+        <div class="document-content">
+            <h2>Как получить BEP-20 адрес в Grey</h2>
+            <ol>
+                <li>Войдите в свой аккаунт Grey</li>
+                <li>Откройте раздел "Кошелек" или "Пополнение"</li>
+                <li>Выберите нужную криптовалюту</li>
+                <li>В списке сетей выберите "BEP-20" или "BSC"</li>
+                <li>Скопируйте адрес кошелька (формат: 0x...)</li>
+                <li>Проверьте корректность скопированного адреса</li>
+                <li>Вставьте адрес в поле BEP-20 на нашем сайте</li>
+            </ol>
+            <p><strong>Важно:</strong> Адрес должен начинаться с "0x" и содержать 42 символа. Не используйте адреса других сетей.</p>
+
+            <div class="media-section">
+                <h3>Визуальная инструкция</h3>
+                
+                <div class="media-grid">
+                    <div class="media-block">
+                        <h4>Шаг 1: Вход в аккаунт</h4>
+                        <img src="media/instructions-grey/photos/1.jpg" alt="Шаг 1: Вход в аккаунт" onclick="openImageModal(this.src)">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 2: Выбор раздела кошелька</h4>
+                        <img src="media/instructions-grey/photos/2.jpg" alt="Шаг 2: Выбор раздела кошелька" onclick="openImageModal(this.src)">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 3: Выбор криптовалюты и сети</h4>
+                        <img src="media/instructions-grey/photos/3.jpg" alt="Шаг 3: Выбор криптовалюты и сети" onclick="openImageModal(this.src)">
+                    </div>
+
+                    <div class="media-block">
+                        <h4>Шаг 4: Копирование BEP-20 адреса</h4>
+                        <img src="media/instructions-grey/photos/4.jpg" alt="Шаг 4: Копирование BEP-20 адреса" onclick="openImageModal(this.src)">
+                    </div>
+                </div>
+
+                <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+                    <span class="image-modal-close" onclick="event.stopPropagation(); closeImageModal();">&times;</span>
+                    <img class="image-modal-content" id="modalImage" src="" alt="Увеличенное изображение" onclick="event.stopPropagation();">
+                </div>
+
+                <div class="video-block">
+                    <h4>Видео инструкция</h4>
+                    <video 
+                        controls 
+                        preload="metadata" 
+                        width="100%"
+                        style="max-width: 100%; height: auto; min-height: 300px;"
+                        poster=""
+                        onerror="console.error('Video error:', this.error); this.style.border='2px solid red';">
+                        <source src="media/instructions-grey/videos/instruction.mp4" type="video/mp4">
+                        <p style="padding: 2rem; text-align: center; color: var(--text-secondary);">
+                            Ваш браузер не поддерживает воспроизведение видео. 
+                            <a href="media/instructions-grey/videos/instruction.mp4" download style="color: var(--primary-color);">Скачайте видео</a>
+                        </p>
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.classList.add('active');
+            modalImg.src = imageSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+    </script>
+</body>
+</html>

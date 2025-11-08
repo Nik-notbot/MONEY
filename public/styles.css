@@ -752,6 +752,8 @@ section h2::after {
     margin: 4rem 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .info-card {
@@ -812,23 +814,13 @@ section h2::after {
     z-index: 1;
 }
 
-.info-icons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-}
-
 .info-icon {
-    font-size: 3.5rem;
+    font-size: 4rem;
     display: block;
+    margin: 0 auto 1.5rem;
     filter: drop-shadow(0 4px 8px rgba(255, 107, 107, 0.3));
     transition: transform 0.3s ease;
     animation: float 3s ease-in-out infinite;
-}
-
-.info-icon:nth-child(2) {
-    animation-delay: 1.5s;
 }
 
 @keyframes float {
@@ -1013,11 +1005,7 @@ footer {
         width: 100%;
     }
 
-    .info-icons {
-        gap: 1.5rem;
-    }
-
     .info-icon {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
 }
